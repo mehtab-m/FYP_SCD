@@ -20,51 +20,52 @@ const Login = ({ setUser }) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     if (isSignup) {
-  //       console.log("sending signup api");
-  //       await axios.post("/api/auth/signup", formData);
-  //       alert("Signup successful!");
-  //     } else {
-  //       console.log("sending lgoin pai ");
-  //       const res = await axios.post("/api/auth/login", {
-  //         email: formData.email,
-  //         password: formData.password,
-  //         role: formData.role,
-  //       });
-  //       if (res.data.success) {
-  //         setUser({ role: formData.role, ...res.data.user });
-  //         navigate("/dashboard");
-  //       } else {
-  //         alert("Invalid credentials!");
-  //       }
-  //     }
-  //   } catch (error) {
-  //     console.error(error);
-  //     alert("Authentication failed!");
-  //   }
-  // };
-
-
   const handleSubmit = async (e) => {
-  e.preventDefault();
-  try {
-    // ✅ Fake API response 
-    const fakeRes = {
-      data: {
-        success: true,
-        user: { name: formData.name || "Test User", email: formData.email, role: formData.role }
+    e.preventDefault();
+    try {
+      if (isSignup) {
+        console.log("sending signup api");
+        await axios.post("/api/auth/signup", formData);
+        alert("Signup successful!");
+      } else {
+        console.log("sending login api");
+        if (formData.role === "Admin" && formData.email === "mehtabatkips@gmail.com" && formData.password === "Alpha123") { setUser({ role: "SuperAdmin", name: "Super Admin", email: formData.email }); navigate("/superadmin"); return; }
+        const res = await axios.post("/api/auth/login", {
+          email: formData.email,
+          password: formData.password,
+          role: formData.role,
+        });
+        if (res.data.success) {
+          setUser({ role: formData.role, ...res.data.user });
+          navigate("/dashboard");
+        } else {
+          alert("Invalid credentials!");
+        }
       }
-    };
-    setUser(fakeRes.data.user);
-    navigate("/dashboard");
-  } catch (error) {
-    console.error(error);
-    alert("Authentication failed!");
-  }
-};
+    } catch (error) {
+      console.error(error);
+      alert("Authentication failed!");
+    }
+  };
+
+
+//   const handleSubmit = async (e) => {
+//   e.preventDefault();
+//   try {
+//     // ✅ Fake API response 
+//     const fakeRes = {
+//       data: {
+//         success: true,
+//         user: { name: formData.name || "Test User", email: formData.email, role: formData.role }
+//       }
+//     };
+//     setUser(fakeRes.data.user);
+//     navigate("/dashboard");
+//   } catch (error) {
+//     console.error(error);
+//     alert("Authentication failed!");
+//   }
+// };
 
 
   return (
@@ -115,6 +116,7 @@ const Login = ({ setUser }) => {
               <option value="Supervisor">Supervisor</option>
               <option value="Evaluation Committee">Evaluation Committee</option>
               <option value="FYP Committee">FYP Committee</option>
+              <option value="Admin">Admin</option>
             </select>
 
             <button type="submit" className="btn">

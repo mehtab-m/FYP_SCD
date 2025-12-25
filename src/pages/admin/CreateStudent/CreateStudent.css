@@ -1,0 +1,45 @@
+.create-student-container {
+  background: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.create-student-container h2 {
+  margin-bottom: 20px;
+  color: #2c3e50;
+}
+
+.create-student-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.create-student-form label {
+  display: flex;
+  flex-direction: column;
+  font-weight: 500;
+  color: #2c3e50;
+}
+
+.create-student-form input {
+  margin-top: 6px;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.create-student-form button {
+  padding: 12px;
+  background: #3498db;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.create-student-form button:hover {
+  background: #2980b9;
+}

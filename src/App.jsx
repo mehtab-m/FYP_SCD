@@ -7,6 +7,8 @@ import StudentDashboard from "./pages/student/StudentDashboard";
 import SupervisorDashboard from "./pages/supervisor/SupervisorDashboard";
 import EvaluationDashboard from "./pages/committee/EvaluationDashboard";
 import FYPCommitteeDashboard from "./pages/admin/FYPCommitteeDashboard";
+import SuperAdminDashboard from "./pages/admin/SuperAdminDashboard";
+
 
 function App() {
   const [user, setUser] = useState(null);
@@ -31,6 +33,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Login setUser={setUser} />} />
         <Route path="/dashboard" element={getDashboard()} />
+        <Route path="/superadmin" element={<SuperAdminDashboard />} />
+
       </Routes>
     </Router>
   );
