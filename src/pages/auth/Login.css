@@ -127,3 +127,37 @@
   letter-spacing: 1px;
   line-height: 1.4;
 }
+
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .auth-container {
+    flex-direction: column; /* stack vertically */
+  }
+
+  .auth-left {
+    display: none; /* hide left side on mobile */
+  }
+
+  .auth-right {
+    flex: none;
+    width: 100%;
+    height: 100vh;
+    background: #fff; /* cleaner look for mobile */
+    padding: 1rem;
+  }
+
+  .form-box {
+    width: 100%;
+    max-width: 350px;
+    margin: auto;
+    box-shadow: none; /* optional: remove shadow for mobile simplicity */
+  }
+}
+
+
+select.input {
+  background: #fff;
+  cursor: pointer;
+}
