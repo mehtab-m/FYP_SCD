@@ -1,7 +1,8 @@
-// src/pages/admin/CreateStudent/CreateStudent.jsx
+
 import React, { useState } from "react";
 import axios from "axios";
 import "./CreateStudent.css";
+import api from "../../../api/axios";
 
 const CreateStudent = () => {
   const [studentData, setStudentData] = useState({
@@ -18,8 +19,11 @@ const CreateStudent = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("handleSubmit triggered");
     try {
-      await axios.post("/api/admin/create-student", studentData);
+      console.log("near to createing studnet ");
+      console.log(studentData);
+      await api.post("/admin/create-student", studentData);
       alert("Student created successfully!");
       setStudentData({
         name: "",
@@ -30,6 +34,7 @@ const CreateStudent = () => {
       });
     } catch (error) {
       console.error(error);
+      console.log("Try block even not run its first line ");
       alert("Failed to create student!");
     }
   };
@@ -78,16 +83,7 @@ const CreateStudent = () => {
             onChange={handleChange}
           />
         </label>
-        <label>
-          CGPA:
-          <input
-            type="text"
-            name="cgpa"
-            placeholder="CGPA"
-            value={studentData.cgpa}
-            onChange={handleChange}
-          />
-        </label>
+         
         <button type="submit">Submit</button>
       </form>
     </div>
