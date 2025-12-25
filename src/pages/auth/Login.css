@@ -1,0 +1,129 @@
+/* src/pages/auth/Login.css */
+
+.auth-container {
+  display: flex;
+  height: 100vh;
+  font-family: "Segoe UI", sans-serif;
+}
+
+/* Left Side */
+.auth-left {
+  flex: 1;
+  background: linear-gradient(135deg, #1e3c72, #2a5298);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo {
+  font-size: 3rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  letter-spacing: 3px;
+}
+
+.auth-svg {
+  width: 200px;
+  height: 200px;
+  animation: float 4s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
+
+/* Right Side */
+.auth-right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f4f6f9;
+}
+
+.form-box {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 10px;
+  width: 350px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  text-align: center;
+  transition: all 0.5s ease;
+}
+
+.form-box h2 {
+  margin-bottom: 1.5rem;
+  color: #2a5298;
+}
+
+.input {
+  width: 100%;
+  padding: 0.8rem;
+  margin: 0.6rem 0;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  transition: border 0.3s ease;
+}
+
+.input:focus {
+  border-color: #2a5298;
+  outline: none;
+}
+
+.btn {
+  width: 100%;
+  padding: 0.8rem;
+  margin-top: 1rem;
+  background: #2a5298;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.btn:hover {
+  background: #1e3c72;
+}
+
+.switch-text {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
+
+.switch-link {
+  color: #ff9800;
+  cursor: pointer;
+  font-weight: bold;
+  margin-left: 5px;
+  transition: color 0.3s ease;
+}
+
+.switch-link:hover {
+  color: #e67e22;
+}
+
+/* Transition effect */
+.login-mode {
+  transform: translateX(0);
+}
+
+.signup-mode {
+  transform: translateX(20px) scale(1.05);
+}
+
+.logo {
+  font-size: 2.2rem;
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: 2rem;
+  background: linear-gradient(90deg, #ff9800, #b48e54);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 1px;
+  line-height: 1.4;
+}
