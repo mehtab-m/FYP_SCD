@@ -51,7 +51,7 @@ const Login = ({ setUser }) => {
   const handleSubmit = async (e) => {
   e.preventDefault();
   try {
-    // ✅ Fake API response (always success)
+    // ✅ Fake API response 
     const fakeRes = {
       data: {
         success: true,
