@@ -76,7 +76,7 @@ const Login = ({ setUser }) => {
 
       <div className="auth-right">
         <div className="form-box login-mode">
-          <h2>logion</h2>
+          <h2>Login</h2>
           <form onSubmit={handleSubmit}>
             <input
               type="email"

@@ -1,8 +1,6 @@
-
 import React, { useState } from "react";
-import axios from "axios";
-import "./CreateStudent.css";
 import api from "../../../api/axios";
+import "./CreateStudent.css";
 
 const CreateStudent = () => {
   const [studentData, setStudentData] = useState({
@@ -10,7 +8,6 @@ const CreateStudent = () => {
     email: "",
     rollNo: "",
     semester: "",
-    cgpa: "",
   });
 
   const handleChange = (e) => {
@@ -19,22 +16,26 @@ const CreateStudent = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("handleSubmit triggered");
     try {
-      console.log("near to createing studnet ");
-      console.log(studentData);
-      await api.post("/admin/create-student", studentData);
+      const payload = {
+        name: studentData.name,
+        email: studentData.email,
+        password: "Temp@123", // default password
+        semester: Number(studentData.semester), // ensure numeric
+        roles: ["STUDENT"], // hardcoded role
+        rollNo: studentData.rollNo, // include only if backend expects it
+      };
+
+      await api.post("/admin/users/create", payload);
       alert("Student created successfully!");
       setStudentData({
         name: "",
         email: "",
         rollNo: "",
         semester: "",
-        cgpa: "",
       });
     } catch (error) {
       console.error(error);
-      console.log("Try block even not run its first line ");
       alert("Failed to create student!");
     }
   };
@@ -76,14 +77,13 @@ const CreateStudent = () => {
         <label>
           Semester:
           <input
-            type="text"
+            type="number"
             name="semester"
             placeholder="Semester"
             value={studentData.semester}
             onChange={handleChange}
           />
         </label>
-         
         <button type="submit">Submit</button>
       </form>
     </div>
