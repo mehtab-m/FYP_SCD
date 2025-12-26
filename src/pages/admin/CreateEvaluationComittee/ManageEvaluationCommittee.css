@@ -1,0 +1,5 @@
+/* ManageEvaluationCommittee.css */
+.committee-container { padding: 20px; }
+.professor-card { display: flex; justify-content: space-between; margin: 10px 0; }
+button:disabled { opacity: 0.5; cursor: not-allowed; }
+.error-box { color: red; }

@@ -1,0 +1,93 @@
+.committee-container {
+  max-width: 700px;
+  margin: 30px auto;
+  padding: 20px;
+  background: #fdfdfd;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+}
+
+.committee-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #2c3e50;
+}
+
+.error-box {
+  background: #fceaea;
+  color: #e74c3c;
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.professor-list, .committee-list {
+  margin-bottom: 25px;
+}
+
+.professor-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f7f9fc;
+  padding: 12px;
+  margin-bottom: 10px;
+  border-radius: 6px;
+  border: 1px solid #e0e0e0;
+}
+
+.professor-card strong {
+  color: #34495e;
+}
+
+.professor-card p {
+  margin: 2px 0 0;
+  font-size: 13px;
+  color: #777;
+}
+
+.professor-card button {
+  padding: 8px 14px;
+  background: #3498db;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.professor-card button:hover:not(:disabled) {
+  background: #2980b9;
+}
+
+.professor-card button:disabled {
+  background: #95a5a6;
+  cursor: not-allowed;
+}
+
+.committee-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.committee-table th, .committee-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+.committee-table th {
+  background: #f0f0f0;
+}
+
+.delete-icon {
+  color: #e74c3c;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.delete-icon:hover {
+  color: #c0392b;
+}

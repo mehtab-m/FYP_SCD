@@ -5,6 +5,8 @@ import MyLogo from "../../assets/icons/logo.png";
 import CreateStudent from "./CreateStudent/CreateStudent";
 import CreateMember from "./CreateMember/CreateMember";
 import CreateProfessor from "./CreateProfessor/CreateProfessor";
+import ManageFYPCommittee from "./CreateFYPComittee/ManageFYPCommittee";
+import ManageEvaluationCommittee from "./CreateEvaluationComittee/ManageEvaluationCommittee"
 import "./SuperAdminDashboard.css";
 
 const SuperAdminDashboard = () => {
@@ -43,6 +45,8 @@ const SuperAdminDashboard = () => {
           <li onClick={() => setActivePage("manageStudent")}>Manage Student</li>
           <li onClick={() => setActivePage("manageMember")}>Manage Supervisor</li>
           <li onClick={() => setActivePage("manageProfessor")}>Manage Professor</li>
+          <li onClick={() => setActivePage("ManageFYPCommittee")}>FYP Committee</li>
+          <li onClick={() => setActivePage("ManageEvaluationCommittee")}>Evaluation Committee</li>
           <li onClick={() => setActivePage("settings")}>System Settings</li>
           <li onClick={() => setActivePage("reports")}>View Reports</li>
         </ul>
@@ -59,6 +63,8 @@ const SuperAdminDashboard = () => {
         {activePage === "manageStudent" && <CreateStudent />}
         {activePage === "manageMember" && <CreateMember />}
         {activePage === "manageProfessor" && <CreateProfessor />}
+        {activePage === "ManageFYPCommittee" && <ManageFYPCommittee />}
+        {activePage === "ManageEvaluationCommittee" && <ManageEvaluationCommittee />}
         {activePage === "settings" && <h2>System Settings Page</h2>}
         {activePage === "reports" && <h2>Reports Page</h2>}
       </main>
