@@ -43,3 +43,22 @@
 .create-student-form button:hover {
   background: #2980b9;
 }
+
+
+.success-message {
+  background: #e6ffed;
+  color: #2ecc71;
+  padding: 10px;
+  border-radius: 6px;
+  margin: 10px 0;
+  text-align: center;
+}
+
+.server-error {
+  background: #fdecea;
+  color: #e74c3c;
+  padding: 10px;
+  border-radius: 6px;
+  margin: 10px 0;
+  text-align: center;
+}

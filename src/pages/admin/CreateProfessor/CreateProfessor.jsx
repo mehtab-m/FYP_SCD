@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import api from "../../../api/axios";
-import "./CreateMember.css";
+import "./CreateProfessor.css";
 
-const CreateMember = () => {
-  const [memberData, setMemberData] = useState({
+const CreateProfessor = () => {
+  const [professorData, setProfessorData] = useState({
     name: "",
     email: "",
   });
@@ -12,7 +12,7 @@ const CreateMember = () => {
   const [successMessage, setSuccessMessage] = useState("");
 
   const handleChange = (e) => {
-    setMemberData({ ...memberData, [e.target.name]: e.target.value });
+    setProfessorData({ ...professorData, [e.target.name]: e.target.value });
     setErrors({});
     setServerError("");
     setSuccessMessage("");
@@ -21,15 +21,15 @@ const CreateMember = () => {
   const validate = () => {
     let tempErrors = {};
 
-    if (!memberData.name.trim()) {
+    if (!professorData.name.trim()) {
       tempErrors.name = "Name is required";
     }
 
-    if (!memberData.email.trim()) {
+    if (!professorData.email.trim()) {
       tempErrors.email = "Email is required";
     } else {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(memberData.email)) {
+      if (!emailRegex.test(professorData.email)) {
         tempErrors.email = "Invalid email format";
       }
     }
@@ -44,19 +44,19 @@ const CreateMember = () => {
 
     try {
       const payload = {
-        name: memberData.name,
-        email: memberData.email,
+        name: professorData.name,
+        email: professorData.email,
         password: "Temp@123",
-        roles: ["SUPERVISOR"],
+        roles: ["PROFESSOR"], // 👈 changed role
       };
 
       await api.post("/admin/users/create", payload);
-      setMemberData({ name: "", email: "" });
-      setSuccessMessage("Supervisor created successfully!");
+      setProfessorData({ name: "", email: "" });
+      setSuccessMessage("Professor created successfully!");
       setServerError("");
     } catch (error) {
       console.error(error);
-      let backendMessage = "Failed to create supervisor.";
+      let backendMessage = "Failed to create professor.";
       if (error.response && error.response.data) {
         backendMessage =
           error.response.data.message ||
@@ -68,16 +68,16 @@ const CreateMember = () => {
   };
 
   return (
-    <div className="create-member-container">
-      <h2>Create New Supervisor</h2>
-      <form onSubmit={handleSubmit} className="create-member-form">
+    <div className="create-professor-container">
+      <h2>Create New Professor</h2>
+      <form onSubmit={handleSubmit} className="create-professor-form">
         <div className="form-group">
           <label>Name:</label>
           <input
             type="text"
             name="name"
             placeholder="Full Name"
-            value={memberData.name}
+            value={professorData.name}
             onChange={handleChange}
             className={errors.name ? "error-input" : ""}
           />
@@ -90,7 +90,7 @@ const CreateMember = () => {
             type="email"
             name="email"
             placeholder="Email"
-            value={memberData.email}
+            value={professorData.email}
             onChange={handleChange}
             className={errors.email ? "error-input" : ""}
           />
@@ -108,4 +108,4 @@ const CreateMember = () => {
   );
 };
 
-export default CreateMember;
+export default CreateProfessor;

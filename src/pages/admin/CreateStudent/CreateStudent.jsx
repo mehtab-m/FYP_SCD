@@ -9,9 +9,13 @@ const CreateStudent = () => {
     rollNo: "",
     semester: "",
   });
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleChange = (e) => {
     setStudentData({ ...studentData, [e.target.name]: e.target.value });
+    setSuccessMessage("");
+    setErrorMessage("");
   };
 
   const handleSubmit = async (e) => {
@@ -20,23 +24,27 @@ const CreateStudent = () => {
       const payload = {
         name: studentData.name,
         email: studentData.email,
-        password: "Temp@123", // default password
-        semester: Number(studentData.semester), // ensure numeric
-        roles: ["STUDENT"], // hardcoded role
-        rollNo: studentData.rollNo, // include only if backend expects it
+        password: "Temp@123",
+        semester: Number(studentData.semester),
+        roles: ["STUDENT"],
+        rollNo: studentData.rollNo,
       };
 
       await api.post("/admin/users/create", payload);
-      alert("Student created successfully!");
-      setStudentData({
-        name: "",
-        email: "",
-        rollNo: "",
-        semester: "",
-      });
+      setStudentData({ name: "", email: "", rollNo: "", semester: "" });
+      setSuccessMessage("Student created successfully!");
+      setErrorMessage("");
     } catch (error) {
       console.error(error);
-      alert("Failed to create student!");
+      let backendMessage = "Failed to create student.";
+      if (error.response && error.response.data) {
+        backendMessage =
+          error.response.data.message ||
+          error.response.data.error ||
+          JSON.stringify(error.response.data);
+      }
+      setErrorMessage(backendMessage);
+      setSuccessMessage("");
     }
   };
 
@@ -84,6 +92,12 @@ const CreateStudent = () => {
             onChange={handleChange}
           />
         </label>
+
+        {successMessage && (
+          <div className="success-message">{successMessage}</div>
+        )}
+        {errorMessage && <div className="server-error">{errorMessage}</div>}
+
         <button type="submit">Submit</button>
       </form>
     </div>

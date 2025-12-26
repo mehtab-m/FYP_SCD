@@ -1,0 +1,78 @@
+.create-member-container {
+  max-width: 400px;
+  margin: 30px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.create-member-form .form-group {
+  margin-bottom: 15px;
+}
+
+.create-member-form label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.create-member-form input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  transition: border-color 0.3s;
+}
+
+.create-member-form input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.error-input {
+  border-color: #e74c3c !important;
+}
+
+.error-text {
+  color: #e74c3c;
+  font-size: 0.85rem;
+  margin-top: 5px;
+  display: block;
+}
+
+.server-error {
+  background: #fdecea;
+  color: #e74c3c;
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.success-message {
+  background: #e6ffed;
+  color: #2ecc71;
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.create-member-form button {
+  width: 100%;
+  padding: 12px;
+  background: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.create-member-form button:hover {
+  background: #0056b3;
+}
