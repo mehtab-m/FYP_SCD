@@ -12,6 +12,11 @@
   background: #2c3e50;
   color: #fff;
   padding: 10px 20px;
+    position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
 }
 
 .navbar-left {
@@ -102,5 +107,6 @@
 .main-content {
   margin-left: 220px; /* space for sidebar */
   padding: 20px;
+   margin-top: 60px; 
    /* space for navbar */
 }

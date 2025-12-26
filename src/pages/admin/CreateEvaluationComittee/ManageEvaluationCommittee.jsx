@@ -9,16 +9,15 @@ const ManageEvaluationCommittee = () => {
   const [committee, setCommittee] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
 
-  useEffect(() => {
-    api.get("/admin/users?role=PROFESSOR")
-      .then(res => setProfessors(res.data))
-      .catch(() => setErrorMessage("Failed to load professors"));
-  }, []);
 
-  useEffect(() => {
-    api.get("/admin/evaluation-committee")
-      .then(res => setCommittee(res.data));
-  }, []);
+  // REPLACE ONLY THIS
+
+useEffect(() => {
+  api.get("/admin/evaluation-committee/available-professors")
+    .then(res => setProfessors(res.data))
+    .catch(() => setErrorMessage("Failed to load professors"));
+}, []);
+
 
   const addToCommittee = async (prof) => {
     if (committee.length >= 4) return;
