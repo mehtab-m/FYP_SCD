@@ -8,24 +8,26 @@ const ManageFYPCommittee = () => {
   const [committee, setCommittee] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
 
-  // 🔹 Fetch professors from backend
-  useEffect(() => {
-    const loadProfessors = async () => {
-      try {
-        const res = await api.get("/admin/users?role=PROFESSOR");
-        setProfessors(res.data);
-      } catch (err) {
-        setErrorMessage("Failed to load professors");
-      }
-    };
-    loadProfessors();
-  }, []);
-
-useEffect(() => {
-  const loadCommittee = async () => {
-    const res = await api.get("/admin/fyp-committee");
-    setCommittee(res.data);
+ useEffect(() => {
+  const loadProfessors = async () => {
+    try {
+      const res = await api.get("/admin/fyp-committee/available-professors");
+      setProfessors(res.data);
+    } catch (err) {
+      setErrorMessage("Failed to load professors");
+    }
   };
+
+  const loadCommittee = async () => {
+    try {
+      const res = await api.get("/admin/fyp-committee");
+      setCommittee(res.data);
+    } catch (err) {
+      setErrorMessage("Failed to load committee members");
+    }
+  };
+
+  loadProfessors();
   loadCommittee();
 }, []);
 
