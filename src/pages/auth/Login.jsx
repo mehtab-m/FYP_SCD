@@ -4,6 +4,10 @@ import "./Login.css";
 import MyLogo from "../../assets/icons/logo.png";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import api from "../../api/axios";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+
+
 
 const Login = ({ setUser }) => {
   const [formData, setFormData] = useState({
@@ -12,31 +16,37 @@ const Login = ({ setUser }) => {
     role: "Student",
   });
 
+  const [errorMessage, setErrorMessage] = useState(""); // ✅ State for errors
+  
+const [showPassword, setShowPassword] = useState(false);
+
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    setErrorMessage(""); // clear error when user types
   };
 
   const validateEmail = (email) => /\S+@\S+\.\S+/.test(email);
   const validatePassword = (password) =>
-    password.length > 8 && /[!@#$%^&*(),.?":{}|<>]/.test(password);
+    password.length > 7 && /[!@#$%^&*(),.?":{}|<>]/.test(password);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     // ✅ Validation checks
     if (!validateEmail(formData.email)) {
-      alert("Invalid email format!");
+      setErrorMessage("Invalid email format!");
       return;
     }
     if (!validatePassword(formData.password)) {
-      alert("Password must be >8 characters and contain a special character!");
+      setErrorMessage("Password must be >8 characters and contain a special character!");
       return;
     }
 
     try {
       console.log("sending login api");
+      console.log(formData);
       if (
         formData.role === "Admin" &&
         formData.email === "fypscd@gmail.com" &&
@@ -50,20 +60,23 @@ const Login = ({ setUser }) => {
         navigate("/superadmin");
         return;
       }
-      const res = await axios.post("/api/auth/login", {
-        email: formData.email,
-        password: formData.password,
-        role: formData.role,
-      });
+
+      const res = await api.post("/auth/login", {
+  email: formData.email,
+  password: formData.password,
+  role: formData.role,
+});
+
+
       if (res.data.success) {
         setUser({ role: formData.role, ...res.data.user });
         navigate("/dashboard");
       } else {
-        alert("Invalid credentials!");
+        setErrorMessage("Invalid credentials!");
       }
     } catch (error) {
       console.error(error);
-      alert("Authentication failed!");
+      setErrorMessage("Authentication failed! Please try again.");
     }
   };
 
@@ -78,6 +91,9 @@ const Login = ({ setUser }) => {
         <div className="form-box login-mode">
           <h2>Login</h2>
           <form onSubmit={handleSubmit}>
+            {errorMessage && (
+              <div className="error-box">{errorMessage}</div> // ✅ Styled error box
+            )}
             <input
               type="email"
               name="email"
@@ -86,14 +102,23 @@ const Login = ({ setUser }) => {
               value={formData.email}
               onChange={handleChange}
             />
-            <input
-              type="password"
-              name="password"
-              placeholder="Password"
-              className="input"
-              value={formData.password}
-              onChange={handleChange}
-            />
+           <div className="password-wrapper">
+  <input
+    type={showPassword ? "text" : "password"}
+    name="password"
+    placeholder="Password"
+    className="input"
+    value={formData.password}
+    onChange={handleChange}
+  />
+  <span
+    className="toggle-password"
+    onClick={() => setShowPassword(!showPassword)}
+  >
+    {showPassword ? <FaEyeSlash /> : <FaEye />}
+  </span>
+</div>
+
             <select
               name="role"
               className="input"

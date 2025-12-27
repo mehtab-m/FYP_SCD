@@ -161,3 +161,29 @@ select.input {
   background: #fff;
   cursor: pointer;
 }
+
+
+.error-box {
+  background: #ffe0e0;
+  color: #d9534f;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  font-size: 14px;
+  text-align: center;
+  border: 1px solid #d9534f;
+}
+
+
+.password-wrapper {
+  position: relative;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #666;
+}
