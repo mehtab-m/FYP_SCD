@@ -7,6 +7,7 @@ import CreateMember from "./CreateMember/CreateMember";
 import CreateProfessor from "./CreateProfessor/CreateProfessor";
 import ManageFYPCommittee from "./CreateFYPComittee/ManageFYPCommittee";
 import ManageEvaluationCommittee from "./CreateEvaluationComittee/ManageEvaluationCommittee"
+import DocumentManagement from "./DocumentManagement/DocumentManagement";
 import "./SuperAdminDashboard.css";
 
 const SuperAdminDashboard = () => {
@@ -47,8 +48,8 @@ const SuperAdminDashboard = () => {
           <li onClick={() => setActivePage("manageProfessor")}>Manage Professor</li>
           <li onClick={() => setActivePage("ManageFYPCommittee")}>FYP Committee</li>
           <li onClick={() => setActivePage("ManageEvaluationCommittee")}>Evaluation Committee</li>
-          <li onClick={() => setActivePage("settings")}>System Settings</li>
-          <li onClick={() => setActivePage("reports")}>View Reports</li>
+          <li onClick={() => setActivePage("DocumentManagement")}>Document Management</li>
+        
         </ul>
       </aside>
 
@@ -65,6 +66,7 @@ const SuperAdminDashboard = () => {
         {activePage === "manageProfessor" && <CreateProfessor />}
         {activePage === "ManageFYPCommittee" && <ManageFYPCommittee />}
         {activePage === "ManageEvaluationCommittee" && <ManageEvaluationCommittee />}
+        {activePage === "DocumentManagement" && <DocumentManagement />}
         {activePage === "settings" && <h2>System Settings Page</h2>}
         {activePage === "reports" && <h2>Reports Page</h2>}
       </main>

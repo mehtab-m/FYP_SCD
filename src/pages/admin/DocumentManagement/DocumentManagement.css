@@ -1,0 +1,73 @@
+.document-container {
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 8px;
+}
+
+h2 {
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.error-box {
+  background: #ffdddd;
+  color: #d8000c;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+}
+
+.add-document {
+  margin-bottom: 20px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.add-document input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.add-document button {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.add-document button:hover {
+  background: #0056b3;
+}
+
+.document-list {
+  margin-top: 20px;
+}
+
+.document-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.document-table th,
+.document-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+}
+
+.document-table th {
+  background: #f0f0f0;
+}
+
+.delete-icon {
+  color: #dc3545;
+  cursor: pointer;
+}
+
+.delete-icon:hover {
+  color: #a71d2a;
+}
