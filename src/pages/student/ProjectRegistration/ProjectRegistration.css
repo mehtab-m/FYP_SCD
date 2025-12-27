@@ -1,0 +1,25 @@
+.project-registration {
+    padding: 20px;
+  }
+  
+  .project-registration table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .project-registration th,
+  .project-registration td {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  .status.pending {
+    color: orange;
+  }
+  .status.accepted {
+    color: green;
+  }
+  .status.rejected {
+    color: red;
+  }
+  

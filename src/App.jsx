@@ -1,6 +1,4 @@
 // src/App.jsx
-
-//HII THIS IS ME AQSA ZIA STARTING WORK ON PROJECT
 import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import "./App.css";

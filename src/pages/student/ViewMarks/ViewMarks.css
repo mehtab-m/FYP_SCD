@@ -1,0 +1,109 @@
+.view-marks {
+    padding: 20px;
+  }
+  
+  .view-marks h2 {
+    margin-bottom: 16px;
+    font-weight: 600;
+  }
+  
+  /* Status states */
+  .vm-status {
+    padding: 12px 14px;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    font-size: 14px;
+  }
+  
+  .vm-loading {
+    background: #f5f8ff;
+    color: #2f5cff;
+    border: 1px solid #dbe5ff;
+  }
+  
+  .vm-error {
+    background: #fff5f5;
+    color: #d93025;
+    border: 1px solid #ffd7d7;
+  }
+  
+  .vm-empty {
+    background: #f8fafb;
+    color: #667085;
+    border: 1px solid #eaecf0;
+  }
+  
+  /* Summary cards */
+  .vm-summary {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+  
+  .vm-card {
+    background: #ffffff;
+    border: 1px solid #eaecf0;
+    border-radius: 10px;
+    padding: 12px 14px;
+    min-width: 180px;
+    box-shadow: 0 1px 2px rgba(16, 24, 40, 0.06);
+  }
+  
+  .vm-label {
+    color: #667085;
+    margin-right: 8px;
+  }
+  
+  .vm-value {
+    color: #111827;
+    font-weight: 600;
+  }
+  
+  /* Table */
+  .vm-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #ffffff;
+    border: 1px solid #eaecf0;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  
+  .vm-table thead th {
+    text-align: left;
+    background: #f9fafb;
+    color: #475467;
+    font-weight: 600;
+    padding: 12px;
+    border-bottom: 1px solid #eaecf0;
+  }
+  
+  .vm-table tbody td {
+    padding: 12px;
+    border-bottom: 1px solid #f2f4f7;
+    color: #1f2937;
+  }
+  
+  .vm-table tbody tr:hover {
+    background: #f8fafc;
+  }
+  
+  .vm-doc {
+    font-weight: 600;
+    color: #0f172a;
+  }
+  
+  .vm-mark,
+  .vm-total {
+    font-weight: 600;
+    color: #111827;
+  }
+  
+  .vm-max {
+    color: #667085;
+    font-weight: 500;
+    margin-left: 4px;
+    font-size: 13px;
+  }
+  

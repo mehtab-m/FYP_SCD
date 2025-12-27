@@ -1,0 +1,19 @@
+.group-management {
+    padding: 20px;
+  }
+  
+  .group-management table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .group-management th,
+  .group-management td {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  .group-management th {
+    background-color: #f4f4f4;
+  }
+  
