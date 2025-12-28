@@ -1,16 +1,24 @@
-// src/pages/student/GroupManagement/GroupManagement.jsx
 import React, { useEffect, useState } from "react";
 import "./GroupManagement.css";
+import api from "../../../api/axios";
 
 const GroupManagement = () => {
   const [students, setStudents] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:8080/api/students") // Example API
-      .then((res) => res.json())
-      .then((data) => setStudents(data))
-      .catch((err) => console.error(err));
+    const fetchStudents = async () => {
+      try {
+        const response = await api.get("admin/users/available_students_for_grouping");
+        setStudents(response.data);
+      } catch (error) {
+        console.error("Error fetching students:", error);
+      }
+    };
+
+    fetchStudents();
   }, []);
+
+
 
   return (
     <div className="group-management">
