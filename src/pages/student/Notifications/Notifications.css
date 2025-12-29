@@ -1,0 +1,77 @@
+.notifications-container {
+  padding: 20px;
+}
+
+.notifications-container h2 {
+  margin-bottom: 15px;
+}
+
+.notification-card {
+  background: #fff;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border-left: 6px solid #ccc;
+}
+
+.notification-card.Approved {
+  border-left-color: #28a745;
+}
+
+.notification-card.Rejected {
+  border-left-color: #dc3545;
+}
+
+.notification-card.Pending {
+  border-left-color: #ffc107;
+}
+
+.notification-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.type {
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.message {
+  margin: 8px 0;
+}
+
+.actions {
+  margin-top: 10px;
+}
+
+.actions button {
+  padding: 6px 12px;
+  margin-right: 8px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.actions .accept {
+  background-color: #28a745;
+  color: #fff;
+}
+
+.actions .reject {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.status {
+  display: inline-block;
+  margin-top: 8px;
+  font-weight: bold;
+}
+
+.empty {
+  color: #777;
+}

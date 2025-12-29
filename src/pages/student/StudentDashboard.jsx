@@ -6,6 +6,7 @@ import GroupManagement from "./GroupManagement/GroupManagement";
 import ProjectRegistration from "./ProjectRegistration/ProjectRegistration";
 import Submissions from "./Submissions/Submissions";
 import ViewMarks from "./ViewMarks/ViewMarks";
+import Notifications from "./Notifications/Notifications";
 import "./StudentDashboard.css";
 
 const StudentDashboard = () => {
@@ -45,6 +46,7 @@ const StudentDashboard = () => {
           <li onClick={() => setActivePage("projectRegistration")}>Project Registration</li>
           <li onClick={() => setActivePage("submissions")}>Submissions</li>
           <li onClick={() => setActivePage("viewMarks")}>View Marks</li>
+          <li onClick={() => setActivePage("notifications")}>Notifications</li>
         </ul>
       </aside>
 
@@ -60,6 +62,7 @@ const StudentDashboard = () => {
         {activePage === "projectRegistration" && <ProjectRegistration />}
         {activePage === "submissions" && <Submissions />}
         {activePage === "viewMarks" && <ViewMarks />}
+        {activePage === "notifications" && <Notifications />}
       </main>
     </div>
   );
