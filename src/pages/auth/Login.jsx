@@ -52,11 +52,14 @@ const [showPassword, setShowPassword] = useState(false);
         formData.email === "fypscd@gmail.com" &&
         formData.password === "fypscd@125"
       ) {
-        setUser({
+        const userData = {
           role: "SuperAdmin",
           name: "Super Admin",
           email: formData.email,
-        });
+          id: 0 // Super admin ID
+        };
+        setUser(userData);
+        localStorage.setItem('user', JSON.stringify(userData));
         navigate("/superadmin");
         return;
       }
@@ -69,7 +72,10 @@ const [showPassword, setShowPassword] = useState(false);
 
 
       if (res.data.success) {
-        setUser({ role: formData.role, ...res.data.user });
+        const userData = { role: formData.role, ...res.data.user };
+        setUser(userData);
+        // Store user in localStorage for access in other components
+        localStorage.setItem('user', JSON.stringify(userData));
         navigate("/dashboard");
       } else {
         setErrorMessage("Invalid credentials!");
@@ -139,4 +145,5 @@ const [showPassword, setShowPassword] = useState(false);
   );
 };
 
-export default Login;
+export default Login; 
+

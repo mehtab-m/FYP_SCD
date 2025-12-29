@@ -1,68 +1,67 @@
 import React, { useEffect, useState } from "react";
 import "./Notifications.css";
-// import api from "../../api/axios";
+import api from "../../../api/axios";
 
 const Notifications = () => {
   const [notifications, setNotifications] = useState([]);
+  const [currentUserId, setCurrentUserId] = useState(null);
 
   useEffect(() => {
-    // ================= REAL API (UNCOMMENT LATER) =================
-    /*
-    const fetchNotifications = async () => {
+    // Get current user ID from localStorage
+    const userStr = localStorage.getItem('user') || sessionStorage.getItem('user');
+    if (userStr) {
       try {
-        const res = await api.get("/student/notifications");
-        setNotifications(res.data);
-      } catch (err) {
-        console.error(err);
+        const user = JSON.parse(userStr);
+        setCurrentUserId(user.id || user.userId);
+      } catch (e) {
+        console.error('Error parsing user data:', e);
       }
-    };
-    fetchNotifications();
-    */
-
-    // ================= DUMMY DATA =================
-    setNotifications([
-      {
-        id: 1,
-        type: "GROUP_INVITE",
-        message: "You have received a group invitation.",
-        status: "Pending",
-        date: "2025-02-01",
-      },
-      {
-        id: 2,
-        type: "PROJECT_STATUS",
-        message: "Your project registration was approved by supervisor.",
-        status: "Approved",
-        date: "2025-01-29",
-      },
-      {
-        id: 3,
-        type: "PROJECT_STATUS",
-        message: "Your project proposal was rejected.",
-        status: "Rejected",
-        date: "2025-01-25",
-      },
-      {
-        id: 4,
-        type: "LATE_SUBMISSION",
-        message: "Late document submission approved by supervisor.",
-        status: "Approved",
-        date: "2025-01-20",
-      },
-    ]);
+    }
   }, []);
 
-  const respondToInvite = async (id, action) => {
-    // ================= REAL API =================
-    /*
-    await api.post(`/student/group-invite/${id}/${action}`);
-    */
+  useEffect(() => {
+    if (currentUserId) {
+      fetchNotifications();
+    }
+  }, [currentUserId]);
 
-    setNotifications(prev =>
-      prev.map(n =>
-        n.id === id ? { ...n, status: action === "accept" ? "Approved" : "Rejected" } : n
-      )
-    );
+  const fetchNotifications = async () => {
+    if (!currentUserId) return;
+    
+    try {
+      const res = await api.get(`/student/groups/invitations-with-leader?studentId=${currentUserId}`);
+      
+      // Transform invitations into notification format
+      const groupInvites = res.data.map(invite => ({
+        id: invite.invitationId,
+        type: "GROUP_INVITE",
+        message: invite.leader 
+          ? `${invite.leader.name} (${invite.leader.email}) invited you to join their group.`
+          : "You have received a group invitation.",
+        status: invite.status === "pending" ? "Pending" : 
+                invite.status === "accepted" ? "Accepted" : 
+                invite.status === "rejected" ? "Rejected" : "Pending",
+        date: new Date().toISOString().split('T')[0],
+        invitationId: invite.invitationId,
+        statusLower: invite.status
+      }));
+      
+      setNotifications(groupInvites);
+    } catch (error) {
+      console.error("Error fetching notifications:", error);
+      setNotifications([]);
+    }
+  };
+
+  const respondToInvite = async (invitationId, action) => {
+    try {
+      await api.post(`/student/groups/invitations/${invitationId}/${action}`);
+      // Refresh notifications after responding
+      await fetchNotifications();
+    } catch (error) {
+      console.error("Error responding to invite:", error);
+      alert("Failed to respond to invitation. Please try again.");
+    }
   };
 
   return (
@@ -81,24 +80,24 @@ const Notifications = () => {
 
             <p className="message">{n.message}</p>
 
-            {n.type === "GROUP_INVITE" && n.status === "Pending" && (
+            {n.type === "GROUP_INVITE" && n.statusLower === "pending" && (
               <div className="actions">
                 <button
                   className="accept"
-                  onClick={() => respondToInvite(n.id, "accept")}
+                  onClick={() => respondToInvite(n.invitationId, "accept")}
                 >
                   Accept
                 </button>
                 <button
                   className="reject"
-                  onClick={() => respondToInvite(n.id, "reject")}
+                  onClick={() => respondToInvite(n.invitationId, "reject")}
                 >
                   Reject
                 </button>
               </div>
             )}
 
-            {n.status !== "Pending" && (
+            {n.statusLower !== "pending" && (
               <span className="status">{n.status}</span>
             )}
           </div>
