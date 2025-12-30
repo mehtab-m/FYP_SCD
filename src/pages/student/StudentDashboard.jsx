@@ -16,6 +16,7 @@ const StudentDashboard = () => {
   const [activePage, setActivePage] = useState("home");
   const [groupMembers, setGroupMembers] = useState([]);
   const [currentUserId, setCurrentUserId] = useState(null);
+  const [projectDetails, setProjectDetails] = useState(null);
 
   useEffect(() => {
     // Get current user ID from localStorage
@@ -33,6 +34,7 @@ const StudentDashboard = () => {
   useEffect(() => {
     if (currentUserId) {
       fetchGroupMembers();
+      fetchProjectDetails();
     }
   }, [currentUserId]);
 
@@ -44,6 +46,21 @@ const StudentDashboard = () => {
     } catch (error) {
       console.error("Error fetching group members:", error);
       setGroupMembers([]);
+    }
+  };
+
+  const fetchProjectDetails = async () => {
+    if (!currentUserId) return;
+    try {
+      const res = await api.get(`/student/projects/details?studentId=${currentUserId}`);
+      if (res.data && res.data.exists) {
+        setProjectDetails(res.data);
+      } else {
+        setProjectDetails(null);
+      }
+    } catch (error) {
+      console.error("Error fetching project details:", error);
+      setProjectDetails(null);
     }
   };
 
@@ -127,6 +144,57 @@ const StudentDashboard = () => {
                 <p style={{ margin: 0, color: "#856404" }}>
                   You are not part of any group yet. Go to <strong>Group Management</strong> to create or join a group.
                 </p>
+              </div>
+            )}
+
+            {projectDetails && (
+              <div style={{ marginTop: "30px", padding: "20px", backgroundColor: "#f8f9fa", borderRadius: "8px" }}>
+                <h2>Your Project Details</h2>
+                <div style={{ marginTop: "15px" }}>
+                  <h3 style={{ margin: "0 0 10px 0" }}>{projectDetails.title}</h3>
+                  <div style={{ marginBottom: "15px" }}>
+                    <strong>Status:</strong>{" "}
+                    <span style={{ 
+                      padding: "5px 15px", 
+                      borderRadius: "5px",
+                      backgroundColor: projectDetails.status === "approved" ? "#d4edda" : "#fff3cd",
+                      color: projectDetails.status === "approved" ? "#155724" : "#856404",
+                      fontWeight: "bold",
+                      marginLeft: "10px"
+                    }}>
+                      {projectDetails.status.charAt(0).toUpperCase() + projectDetails.status.slice(1)}
+                    </span>
+                  </div>
+                  
+                  <div style={{ marginBottom: "15px" }}>
+                    <strong>Abstract:</strong>
+                    <p style={{ whiteSpace: "pre-wrap", marginTop: "5px" }}>{projectDetails.abstractText}</p>
+                  </div>
+
+                  {projectDetails.supervisorPreferences && projectDetails.supervisorPreferences.length > 0 && (
+                    <div style={{ marginBottom: "15px" }}>
+                      <strong>Supervisor Preferences:</strong>
+                      <ol style={{ marginTop: "5px" }}>
+                        {projectDetails.supervisorPreferences
+                          .sort((a, b) => a.preferenceOrder - b.preferenceOrder)
+                          .map((pref, idx) => (
+                            <li key={idx}>
+                              {pref.preferenceOrder === 1 ? "1st" : pref.preferenceOrder === 2 ? "2nd" : "3rd"}: {pref.supervisorName} ({pref.supervisorEmail})
+                            </li>
+                          ))}
+                      </ol>
+                    </div>
+                  )}
+
+                  {projectDetails.assignedSupervisor && (
+                    <div style={{ marginTop: "15px", padding: "15px", backgroundColor: "#d4edda", borderRadius: "5px" }}>
+                      <strong>Assigned Supervisor:</strong>
+                      <p style={{ margin: "5px 0 0 0", fontWeight: "bold" }}>
+                        {projectDetails.assignedSupervisor.name} ({projectDetails.assignedSupervisor.email})
+                      </p>
+                    </div>
+                  )}
+                </div>
               </div>
             )}
           </>
