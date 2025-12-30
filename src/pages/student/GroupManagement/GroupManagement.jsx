@@ -7,6 +7,7 @@ const GroupManagement = () => {
   const [accepted, setAccepted] = useState([]);
   const [selected, setSelected] = useState([]);
   const [currentUserId, setCurrentUserId] = useState(null);
+  const [isGroupFinalized, setIsGroupFinalized] = useState(false);
 
   useEffect(() => {
     // Get current user ID from localStorage or session
@@ -26,11 +27,13 @@ const GroupManagement = () => {
     if (currentUserId) {
       fetchAcceptedStudents();
       fetchSentInvitations(); // Fetch invitation statuses
+      checkIfGroupFinalized(); // Check if group is already finalized
       
       // Refresh statuses every 5 seconds to catch updates
       const interval = setInterval(() => {
         fetchSentInvitations();
         fetchAcceptedStudents();
+        checkIfGroupFinalized();
       }, 5000);
       
       return () => clearInterval(interval);
@@ -82,6 +85,17 @@ const GroupManagement = () => {
     setAccepted(res.data.map(s => ({ ...s, id: s.userId || s.id })));
   };
 
+  const checkIfGroupFinalized = async () => {
+    if (!currentUserId) return;
+    try {
+      const res = await api.get(`/student/groups/is-finalized?leaderId=${currentUserId}`);
+      setIsGroupFinalized(res.data.finalized || false);
+    } catch (error) {
+      console.error("Error checking if group is finalized:", error);
+      setIsGroupFinalized(false);
+    }
+  };
+
   const sendInvite = async (studentId) => {
     if (!currentUserId) {
       alert("User not logged in. Please refresh the page.");
@@ -114,17 +128,24 @@ const GroupManagement = () => {
       alert("User not logged in. Please refresh the page.");
       return;
     }
+    if (isGroupFinalized) {
+      alert("Group is already finalized. You cannot finalize it again.");
+      return;
+    }
     try {
       await api.post(`/student/groups/finalize?leaderId=${currentUserId}`, {
         selectedStudentIds: selected
       });
-      alert("Group finalized successfully");
+      alert("Group finalized successfully! All members will be notified.");
       // Refresh the page or update state
       fetchAvailableStudents();
       fetchAcceptedStudents();
+      checkIfGroupFinalized();
+      setSelected([]); // Clear selection
     } catch (error) {
       console.error("Error finalizing group:", error);
-      alert("Failed to finalize group. Please try again.");
+      const errorMsg = error.response?.data?.message || error.message || "Failed to finalize group. Please try again.";
+      alert(errorMsg);
     }
   };
 
@@ -187,12 +208,19 @@ const GroupManagement = () => {
         );
       })}
 
-      <button
-        disabled={selected.length !== 3}
-        onClick={finalizeGroup}
-      >
-        Finalize Group
-      </button>
+      {isGroupFinalized ? (
+        <div style={{ padding: "20px", backgroundColor: "#d4edda", borderRadius: "5px", marginTop: "20px" }}>
+          <h3 style={{ color: "#155724", margin: "0 0 10px 0" }}>✓ Group Already Finalized</h3>
+          <p style={{ color: "#155724", margin: 0 }}>Your group has been successfully finalized. You can view your group members in the dashboard.</p>
+        </div>
+      ) : (
+        <button
+          disabled={selected.length !== 3}
+          onClick={finalizeGroup}
+        >
+          Finalize Group
+        </button>
+      )}
     </div>
   );
 };

@@ -32,19 +32,31 @@ const Notifications = () => {
       const res = await api.get(`/student/groups/invitations-with-leader?studentId=${currentUserId}`);
       
       // Transform invitations into notification format
-      const groupInvites = res.data.map(invite => ({
-        id: invite.invitationId,
-        type: "GROUP_INVITE",
-        message: invite.leader 
-          ? `${invite.leader.name} (${invite.leader.email}) invited you to join their group.`
-          : "You have received a group invitation.",
-        status: invite.status === "pending" ? "Pending" : 
-                invite.status === "accepted" ? "Accepted" : 
-                invite.status === "rejected" ? "Rejected" : "Pending",
-        date: new Date().toISOString().split('T')[0],
-        invitationId: invite.invitationId,
-        statusLower: invite.status
-      }));
+      const groupInvites = res.data.map(invite => {
+        let message = "";
+        if (invite.type === "GROUP_CREATED") {
+          const memberCount = invite.memberCount || 0;
+          const leaderName = invite.leader?.name || "Group Leader";
+          message = `Your group has been created successfully! You are part of a group with ${memberCount} member(s). Group leader: ${leaderName}`;
+        } else {
+          message = invite.leader 
+            ? `${invite.leader.name} (${invite.leader.email}) invited you to join their group.`
+            : "You have received a group invitation.";
+        }
+        
+        return {
+          id: invite.invitationId || `group-${invite.groupId}`,
+          type: invite.type || "GROUP_INVITE",
+          message: message,
+          status: invite.status === "pending" ? "Pending" : 
+                  invite.status === "accepted" ? "Accepted" : 
+                  invite.status === "rejected" ? "Rejected" : "Accepted",
+          date: new Date().toISOString().split('T')[0],
+          invitationId: invite.invitationId,
+          statusLower: invite.status || "accepted",
+          groupId: invite.groupId
+        };
+      });
       
       setNotifications(groupInvites);
     } catch (error) {
@@ -94,6 +106,14 @@ const Notifications = () => {
                 >
                   Reject
                 </button>
+              </div>
+            )}
+            
+            {n.type === "GROUP_CREATED" && (
+              <div className="actions">
+                <span className="status" style={{ color: "#28a745", fontWeight: "bold" }}>
+                  ✓ Group Created
+                </span>
               </div>
             )}
 
