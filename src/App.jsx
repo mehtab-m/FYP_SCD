@@ -6,7 +6,7 @@ import Login from "./pages/auth/Login";
 import StudentDashboard from "./pages/student/StudentDashboard";
 import SupervisorDashboard from "./pages/supervisor/SupervisorDashboard";
 import EvaluationDashboard from "./pages/committee/EvaluationDashboard";
-import FYPCommitteeDashboard from "./pages/admin/FYPCommitteeDashboard";
+import FYPCommitteeDashboard from "./pages/committee/FYP/FYPCommitteeDashboard";
 import SuperAdminDashboard from "./pages/admin/SuperAdminDashboard";
 
 
