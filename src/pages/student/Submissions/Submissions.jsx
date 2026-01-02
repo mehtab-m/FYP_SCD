@@ -1,16 +1,22 @@
 // src/pages/student/Submissions/Submissions.jsx
 import React, { useState, useEffect } from "react";
 import "./Submissions.css";
+import api from "../../../api/axios";
 
 const Submissions = () => {
   const [submissions, setSubmissions] = useState([]);
-
+  const [errorMessage, setErrorMessage] = useState(""); 
   useEffect(() => {
-    fetch("http://localhost:8080/api/submissions")
-      .then((res) => res.json())
-      .then((data) => setSubmissions(data))
-      .catch((err) => console.error(err));
+    loadSubmissions();
   }, []);
+  const loadSubmissions = async () => {
+    try {
+      const res = await api.get("/submissions");
+      setSubmissions(res.data);
+    } catch (err) {
+      setErrorMessage("Failed to load submissions");
+    }
+  };
 
   return (
     <div className="submissions">

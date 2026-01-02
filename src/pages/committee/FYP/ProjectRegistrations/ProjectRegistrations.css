@@ -1,0 +1,278 @@
+.project-registrations-page {
+  padding: 20px;
+}
+
+.project-registrations-page h1 {
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.project-registrations-page > p {
+  margin-bottom: 30px;
+  color: #666;
+}
+
+.projects-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.project-card {
+  background: white;
+  border-radius: 8px;
+  padding: 25px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e0e0e0;
+}
+
+.project-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.project-header h2 {
+  margin: 0;
+  color: #333;
+  font-size: 24px;
+}
+
+.status-badge {
+  padding: 5px 15px;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.project-section {
+  margin-bottom: 25px;
+}
+
+.project-section h3 {
+  margin-bottom: 10px;
+  color: #555;
+  font-size: 18px;
+}
+
+.abstract-text {
+  line-height: 1.6;
+  color: #666;
+  text-align: justify;
+}
+
+.members-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.members-table thead {
+  background-color: #f8f9fa;
+}
+
+.members-table th,
+.members-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.members-table th {
+  font-weight: 600;
+  color: #333;
+}
+
+.leader-badge {
+  background-color: #ffd700;
+  color: #333;
+  padding: 3px 8px;
+  border-radius: 3px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.preferences-list {
+  margin-top: 10px;
+  padding-left: 20px;
+}
+
+.preference-item {
+  margin-bottom: 8px;
+  color: #666;
+}
+
+.assigned-supervisor {
+  background-color: #e7f3ff;
+  padding: 15px;
+  border-radius: 5px;
+  border-left: 4px solid #007bff;
+}
+
+.supervisor-info {
+  margin: 0;
+  color: #333;
+}
+
+.rejection-reason {
+  background-color: #fff5f5;
+  padding: 15px;
+  border-radius: 5px;
+  border-left: 4px solid #dc3545;
+}
+
+.project-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.approved-supervisor-info {
+  padding: 12px 20px;
+  background-color: #d4edda;
+  border: 1px solid #c3e6cb;
+  border-radius: 5px;
+  color: #155724;
+  font-size: 14px;
+  width: 100%;
+}
+
+.approved-supervisor-info strong {
+  color: #155724;
+  margin-right: 8px;
+}
+
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.btn-accept {
+  background-color: #28a745;
+  color: white;
+}
+
+.btn-accept:hover {
+  background-color: #218838;
+}
+
+.btn-reject {
+  background-color: #dc3545;
+  color: white;
+}
+
+.btn-reject:hover {
+  background-color: #c82333;
+}
+
+.btn-assign {
+  background-color: #007bff;
+  color: white;
+}
+
+.btn-assign:hover {
+  background-color: #0056b3;
+}
+
+.btn-assign:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
+
+.btn-approve {
+  background-color: #17a2b8;
+  color: white;
+}
+
+.btn-approve:hover {
+  background-color: #138496;
+}
+
+.btn-cancel {
+  background-color: #6c757d;
+  color: white;
+}
+
+.btn-cancel:hover {
+  background-color: #5a6268;
+}
+
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 8px;
+  padding: 0;
+  max-width: 600px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.modal-header h2 {
+  margin: 0;
+  color: #333;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 28px;
+  cursor: pointer;
+  color: #666;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-close:hover {
+  color: #333;
+}
+
+.modal-body {
+  padding: 20px;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 20px;
+  border-top: 1px solid #e0e0e0;
+}
+

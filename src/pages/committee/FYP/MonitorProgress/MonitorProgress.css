@@ -1,0 +1,180 @@
+.monitor-progress-page {
+  padding: 20px;
+}
+
+.page-header {
+  margin-bottom: 30px;
+}
+
+.page-header h1 {
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.page-header > p {
+  margin-bottom: 20px;
+  color: #666;
+}
+
+.filter-section {
+  margin-bottom: 25px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.filter-section label {
+  font-weight: 500;
+  color: #333;
+}
+
+.filter-select {
+  padding: 8px 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 14px;
+  background-color: white;
+  cursor: pointer;
+}
+
+.filter-select:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+.loading-container,
+.empty-state {
+  text-align: center;
+  padding: 40px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  margin-top: 20px;
+}
+
+.empty-state p {
+  color: #666;
+  margin: 0;
+}
+
+.progress-content {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.progress-section {
+  margin-bottom: 30px;
+}
+
+.progress-section h2 {
+  margin-bottom: 20px;
+  color: #333;
+  font-size: 22px;
+  border-bottom: 2px solid #e0e0e0;
+  padding-bottom: 10px;
+}
+
+.progress-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.progress-card {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e0e0e0;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.progress-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.card-header h3 {
+  margin: 0;
+  color: #333;
+  font-size: 18px;
+}
+
+.status-badge {
+  padding: 5px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+  background-color: #d1ecf1;
+  color: #0c5460;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.info-row {
+  color: #666;
+  font-size: 14px;
+}
+
+.info-row strong {
+  color: #333;
+  margin-right: 5px;
+}
+
+.milestones {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.milestones strong {
+  display: block;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.milestones ul {
+  margin: 0;
+  padding-left: 20px;
+  list-style-type: none;
+}
+
+.milestones li {
+  padding: 5px 0;
+  color: #666;
+  font-size: 14px;
+  position: relative;
+  padding-left: 20px;
+}
+
+.milestones li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #999;
+}
+
+.milestones li.completed {
+  color: #28a745;
+}
+
+.milestones li.completed::before {
+  content: "✓";
+  color: #28a745;
+  font-weight: bold;
+}
+

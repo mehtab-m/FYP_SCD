@@ -10,7 +10,6 @@ const GroupManagement = () => {
   const [isGroupFinalized, setIsGroupFinalized] = useState(false);
 
   useEffect(() => {
-    // Get current user ID from localStorage or session
     const userStr = localStorage.getItem('user') || sessionStorage.getItem('user');
     if (userStr) {
       try {
@@ -26,23 +25,21 @@ const GroupManagement = () => {
   useEffect(() => {
     if (currentUserId) {
       fetchAcceptedStudents();
-      fetchSentInvitations(); // Fetch invitation statuses
-      checkIfGroupFinalized(); // Check if group is already finalized
-      
-      // Refresh statuses every 5 seconds to catch updates
+      fetchSentInvitations();
+      checkIfGroupFinalized();
+
       const interval = setInterval(() => {
         fetchSentInvitations();
         fetchAcceptedStudents();
         checkIfGroupFinalized();
       }, 5000);
-      
+
       return () => clearInterval(interval);
     }
   }, [currentUserId]);
 
   const fetchAvailableStudents = async () => {
     const res = await api.get("/student/groups/available");
-    // Map userId to id for consistency
     setStudents(res.data.map(s => ({ 
       ...s, 
       id: s.userId || s.id,
@@ -54,19 +51,15 @@ const GroupManagement = () => {
     if (!currentUserId) return;
     try {
       const res = await api.get(`/student/groups/sent-invitations?leaderId=${currentUserId}`);
-      // Create a map of studentId -> status
       const statusMap = {};
       res.data.forEach(invite => {
         statusMap[invite.studentId] = invite.status;
       });
-      
-      // Update students with actual statuses
       setStudents(prev => 
         prev.map(s => {
           const studentId = s.id || s.userId;
           const status = statusMap[studentId];
           if (status) {
-            // Capitalize first letter for display
             const displayStatus = status.charAt(0).toUpperCase() + status.slice(1);
             return { ...s, status: displayStatus };
           }
@@ -81,7 +74,6 @@ const GroupManagement = () => {
   const fetchAcceptedStudents = async () => {
     if (!currentUserId) return;
     const res = await api.get(`/student/groups/accepted?leaderId=${currentUserId}`);
-    // Map userId to id for consistency
     setAccepted(res.data.map(s => ({ ...s, id: s.userId || s.id })));
   };
 
@@ -103,11 +95,9 @@ const GroupManagement = () => {
     }
     try {
       await api.post(`/student/groups/invite/${studentId}?leaderId=${currentUserId}`);
-      // Refresh invitation statuses after sending
       await fetchSentInvitations();
-      // Also refresh available students to update the list
       await fetchAvailableStudents();
-      await fetchSentInvitations(); // Fetch again to update statuses
+      await fetchSentInvitations();
     } catch (error) {
       console.error("Error sending invite:", error);
       const errorMsg = error.response?.data?.message || error.message || "Failed to send invitation. Please try again.";
@@ -137,11 +127,10 @@ const GroupManagement = () => {
         selectedStudentIds: selected
       });
       alert("Group finalized successfully! All members will be notified.");
-      // Refresh the page or update state
       fetchAvailableStudents();
       fetchAcceptedStudents();
       checkIfGroupFinalized();
-      setSelected([]); // Clear selection
+      setSelected([]);
     } catch (error) {
       console.error("Error finalizing group:", error);
       const errorMsg = error.response?.data?.message || error.message || "Failed to finalize group. Please try again.";
@@ -149,10 +138,22 @@ const GroupManagement = () => {
     }
   };
 
+  // 🔥 Show only the finalized message if group is finalized
+  if (isGroupFinalized) {
+    return (
+      <div className="group-finalized-page" style={{ padding: "40px", backgroundColor: "#d4edda", borderRadius: "10px", marginTop: "20px", textAlign: "center" }}>
+        <h2 style={{ color: "#155724" }}>✓ Group Already Finalized</h2>
+        <p style={{ color: "#155724", fontSize: "18px" }}>
+          Your group has been successfully finalized. You can view your group members in the dashboard.
+        </p>
+      </div>
+    );
+  }
+
+  // Normal page if not finalized
   return (
     <div className="group-management">
       <h2>Available Students</h2>
-
       <table>
         <thead>
           <tr>
@@ -173,19 +174,13 @@ const GroupManagement = () => {
                 <td>{s.email}</td>
                 <td>
                   <button
-                    disabled={s.status === "Pending" || s.status === "pending" || 
-                             s.status === "Accepted" || s.status === "accepted"}
+                    disabled={["Pending","Accepted"].includes(s.status)}
                     onClick={() => sendInvite(studentId)}
                   >
                     +
                   </button>
                 </td>
-                <td>
-                  {s.status === "pending" || s.status === "Pending" ? "Pending" : 
-                   s.status === "accepted" || s.status === "Accepted" ? "Accepted" : 
-                   s.status === "rejected" || s.status === "Rejected" ? "Rejected" : 
-                   s.status || "-"}
-                </td>
+                <td>{s.status || "-"}</td>
               </tr>
             );
           })}
@@ -193,7 +188,6 @@ const GroupManagement = () => {
       </table>
 
       <h2>Accepted Students</h2>
-
       {accepted.map(s => {
         const studentId = s.id || s.userId;
         return (
@@ -208,19 +202,12 @@ const GroupManagement = () => {
         );
       })}
 
-      {isGroupFinalized ? (
-        <div style={{ padding: "20px", backgroundColor: "#d4edda", borderRadius: "5px", marginTop: "20px" }}>
-          <h3 style={{ color: "#155724", margin: "0 0 10px 0" }}>✓ Group Already Finalized</h3>
-          <p style={{ color: "#155724", margin: 0 }}>Your group has been successfully finalized. You can view your group members in the dashboard.</p>
-        </div>
-      ) : (
-        <button
-          disabled={selected.length !== 3}
-          onClick={finalizeGroup}
-        >
-          Finalize Group
-        </button>
-      )}
+      <button
+        disabled={selected.length !== 3}
+        onClick={finalizeGroup}
+      >
+        Finalize Group
+      </button>
     </div>
   );
 };
