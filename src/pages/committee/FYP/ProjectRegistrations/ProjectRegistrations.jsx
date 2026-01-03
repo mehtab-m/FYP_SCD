@@ -7,10 +7,21 @@ const ProjectRegistrations = () => {
   const [loading, setLoading] = useState(false);
   const [selectedProject, setSelectedProject] = useState(null);
   const [showAssignModal, setShowAssignModal] = useState(false);
-  const [selectedSupervisorId, setSelectedSupervisorId] = useState("");
+  const [selectedSupervisorEmail, setSelectedSupervisorEmail] = useState("");
   const [availableSupervisors, setAvailableSupervisors] = useState([]);
+  const [currentUserId, setCurrentUserId] = useState(null);
 
   useEffect(() => {
+    // Get current user ID from localStorage
+    const userStr = localStorage.getItem('user') || sessionStorage.getItem('user');
+    if (userStr) {
+      try {
+        const user = JSON.parse(userStr);
+        setCurrentUserId(user.id || user.userId);
+      } catch (e) {
+        console.error('Error parsing user data:', e);
+      }
+    }
     fetchProjectRegistrations();
     fetchAvailableSupervisors();
   }, []);
@@ -39,19 +50,26 @@ const ProjectRegistrations = () => {
   };
 
   const handleAssignSupervisor = async () => {
-    if (!selectedProject || !selectedSupervisorId) {
+    if (!selectedProject || !selectedSupervisorEmail) {
       alert("Please select a supervisor");
       return;
     }
 
+    if (!currentUserId) {
+      alert("User session not found. Please log in again.");
+      return;
+    }
+
     try {
+    
       await api.post("/admin/projects/assign-supervisor", {
         projectId: selectedProject.id,
-        supervisorId: parseInt(selectedSupervisorId)
+        supervisorEmail: selectedSupervisorEmail,
+        committeeId: currentUserId
       });
       alert("Supervisor assigned successfully!");
       setShowAssignModal(false);
-      setSelectedSupervisorId("");
+      setSelectedSupervisorEmail("");
       setSelectedProject(null);
       fetchProjectRegistrations();
     } catch (error) {
@@ -234,14 +252,7 @@ const ProjectRegistrations = () => {
                   )}
                 </div>
 
-                {project.assignedSupervisor && (
-                  <div className="project-section assigned-supervisor">
-                    <h3>Assigned Supervisor</h3>
-                    <p className="supervisor-info">
-                      <strong>{project.assignedSupervisor.name}</strong> ({project.assignedSupervisor.email})
-                    </p>
-                  </div>
-                )}
+           
 
                 {project.rejectionReason && (
                   <div className="project-section rejection-reason">
@@ -324,8 +335,8 @@ const ProjectRegistrations = () => {
                 </label>
                 <select
                   id="supervisor-select"
-                  value={selectedSupervisorId}
-                  onChange={(e) => setSelectedSupervisorId(e.target.value)}
+                  value={selectedSupervisorEmail}
+                  onChange={(e) => setSelectedSupervisorEmail(e.target.value)}
                   style={{
                     width: "100%",
                     padding: "10px",
@@ -337,7 +348,7 @@ const ProjectRegistrations = () => {
                 >
                   <option value="">-- Select a supervisor --</option>
                   {availableSupervisors.map((supervisor) => (
-                    <option key={supervisor.id} value={supervisor.id}>
+                    <option key={supervisor.id} value={supervisor.email}>
                       {supervisor.name} ({supervisor.email})
                     </option>
                   ))}
@@ -367,7 +378,7 @@ const ProjectRegistrations = () => {
               <button 
                 className="btn btn-assign"
                 onClick={handleAssignSupervisor}
-                disabled={!selectedSupervisorId}
+                disabled={!selectedSupervisorEmail}
               >
                 Assign Supervisor
               </button>
