@@ -5,7 +5,7 @@ import "./App.css";
 import Login from "./pages/auth/Login";
 import StudentDashboard from "./pages/student/StudentDashboard";
 import SupervisorDashboard from "./pages/supervisor/SupervisorDashboard";
-import EvaluationDashboard from "./pages/committee/EvaluationDashboard";
+import EvaluationDashboard from "./pages/committee/Evaluation/EvaluationDashboard";
 import FYPCommitteeDashboard from "./pages/committee/FYP/FYPCommitteeDashboard";
 import SuperAdminDashboard from "./pages/admin/SuperAdminDashboard";
 
