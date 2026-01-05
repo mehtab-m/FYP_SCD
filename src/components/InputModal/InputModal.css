@@ -1,0 +1,10 @@
+.input-modal {
+  max-width: 500px;
+}
+
+.input-modal .modal-body p {
+  margin: 0;
+  color: var(--text-primary);
+  line-height: 1.6;
+}
+

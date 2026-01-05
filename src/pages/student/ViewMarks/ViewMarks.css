@@ -1,109 +1,187 @@
+/* ViewMarks.css - Professional Design System */
+
 .view-marks {
-    padding: 20px;
-  }
-  
-  .view-marks h2 {
-    margin-bottom: 16px;
-    font-weight: 600;
-  }
-  
-  /* Status states */
-  .vm-status {
-    padding: 12px 14px;
-    border-radius: 8px;
-    margin-bottom: 16px;
-    font-size: 14px;
-  }
-  
-  .vm-loading {
-    background: #f5f8ff;
-    color: #2f5cff;
-    border: 1px solid #dbe5ff;
-  }
-  
-  .vm-error {
-    background: #fff5f5;
-    color: #d93025;
-    border: 1px solid #ffd7d7;
-  }
-  
-  .vm-empty {
-    background: #f8fafb;
-    color: #667085;
-    border: 1px solid #eaecf0;
-  }
-  
-  /* Summary cards */
-  .vm-summary {
-    display: flex;
-    gap: 12px;
-    margin-bottom: 16px;
-    flex-wrap: wrap;
-  }
-  
-  .vm-card {
-    background: #ffffff;
-    border: 1px solid #eaecf0;
-    border-radius: 10px;
-    padding: 12px 14px;
-    min-width: 180px;
-    box-shadow: 0 1px 2px rgba(16, 24, 40, 0.06);
-  }
-  
-  .vm-label {
-    color: #667085;
-    margin-right: 8px;
-  }
-  
-  .vm-value {
-    color: #111827;
-    font-weight: 600;
-  }
-  
-  /* Table */
-  .vm-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: #ffffff;
-    border: 1px solid #eaecf0;
-    border-radius: 10px;
-    overflow: hidden;
-  }
-  
-  .vm-table thead th {
-    text-align: left;
-    background: #f9fafb;
-    color: #475467;
-    font-weight: 600;
-    padding: 12px;
-    border-bottom: 1px solid #eaecf0;
-  }
-  
-  .vm-table tbody td {
-    padding: 12px;
-    border-bottom: 1px solid #f2f4f7;
-    color: #1f2937;
-  }
-  
-  .vm-table tbody tr:hover {
-    background: #f8fafc;
-  }
-  
-  .vm-doc {
-    font-weight: 600;
-    color: #0f172a;
-  }
-  
-  .vm-mark,
-  .vm-total {
-    font-weight: 600;
-    color: #111827;
-  }
-  
-  .vm-max {
-    color: #667085;
-    font-weight: 500;
-    margin-left: 4px;
-    font-size: 13px;
-  }
-  
+  padding: var(--spacing-xl);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.view-marks h2 {
+  margin-bottom: var(--spacing-lg);
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: var(--font-size-2xl);
+}
+
+/* Status states */
+.vm-status {
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius);
+  margin-bottom: var(--spacing-md);
+  font-size: var(--font-size-sm);
+}
+
+.vm-loading {
+  background: var(--info-light);
+  color: #1e40af;
+  border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.vm-error {
+  background: var(--error-light);
+  color: #991b1b;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.vm-empty {
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+}
+
+/* Summary cards */
+.vm-summary {
+  display: flex;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-lg);
+  flex-wrap: wrap;
+}
+
+.vm-card {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-md);
+  min-width: 180px;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-base);
+}
+
+.vm-card:hover {
+  box-shadow: var(--shadow-md);
+  border-color: var(--gray-300);
+}
+
+.vm-label {
+  color: var(--text-secondary);
+  margin-right: var(--spacing-sm);
+  font-size: var(--font-size-sm);
+}
+
+.vm-value {
+  color: var(--text-primary);
+  font-weight: 600;
+  font-size: var(--font-size-base);
+}
+
+/* Table */
+.vm-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.vm-table thead th {
+  text-align: left;
+  background: var(--gray-50);
+  color: var(--text-secondary);
+  font-weight: 600;
+  padding: var(--spacing-md);
+  border-bottom: 1px solid var(--border-color);
+  font-size: var(--font-size-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.vm-table tbody td {
+  padding: var(--spacing-md);
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-primary);
+  font-size: var(--font-size-sm);
+}
+
+.vm-table tbody tr:hover {
+  background: var(--gray-50);
+}
+
+.vm-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.vm-doc {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.vm-mark,
+.vm-total {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.vm-max {
+  color: var(--text-secondary);
+  font-weight: 500;
+  margin-left: var(--spacing-xs);
+  font-size: var(--font-size-xs);
+}
+
+/* Group info */
+.vm-group-info {
+  margin-bottom: var(--spacing-lg);
+  padding: var(--spacing-md);
+  background: var(--bg-secondary);
+  border-radius: var(--border-radius);
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+  border: 1px solid var(--border-color);
+}
+
+.vm-project-title {
+  color: var(--text-secondary);
+  font-weight: normal;
+}
+
+/* Grade styling */
+.vm-card-grade {
+  background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+  border: 2px solid var(--primary-light);
+}
+
+.vm-grade {
+  display: inline-block;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--border-radius);
+  font-weight: 700;
+  font-size: var(--font-size-lg);
+  text-align: center;
+  min-width: 50px;
+}
+
+.vm-grade-a {
+  background-color: var(--success-light);
+  color: #065f46;
+}
+
+.vm-grade-b {
+  background-color: var(--info-light);
+  color: #1e40af;
+}
+
+.vm-grade-c {
+  background-color: var(--warning-light);
+  color: #92400e;
+}
+
+.vm-grade-d,
+.vm-grade-e,
+.vm-grade-f,
+.vm-grade-g,
+.vm-grade-na {
+  background-color: var(--error-light);
+  color: #991b1b;
+}

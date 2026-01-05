@@ -1,93 +1,152 @@
+/* ManageFYPCommittee.css - Professional Design System */
+
 .committee-container {
-  max-width: 700px;
-  margin: 30px auto;
-  padding: 20px;
-  background: #fdfdfd;
-  border-radius: 8px;
-  box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: var(--spacing-xl);
+  background: var(--bg-primary);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-md);
 }
 
 .committee-container h2 {
-  text-align: center;
-  margin-bottom: 20px;
-  color: #2c3e50;
+  text-align: left;
+  margin-bottom: var(--spacing-xl);
+  color: var(--text-primary);
+  font-size: var(--font-size-2xl);
+  font-weight: 600;
+}
+
+.committee-container h3 {
+  margin-bottom: var(--spacing-md);
+  color: var(--text-primary);
+  font-size: var(--font-size-xl);
+  font-weight: 600;
 }
 
 .error-box {
-  background: #fceaea;
-  color: #e74c3c;
-  padding: 10px;
-  border-radius: 6px;
-  margin-bottom: 15px;
+  background: var(--error-light);
+  color: var(--error-color);
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius);
+  margin-bottom: var(--spacing-md);
   text-align: center;
-  font-weight: bold;
+  font-weight: 500;
+  border: 1px solid rgba(239, 68, 68, 0.2);
 }
 
-.professor-list, .committee-list {
-  margin-bottom: 25px;
+.professor-list,
+.committee-list {
+  margin-bottom: var(--spacing-xl);
 }
 
 .professor-card {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #f7f9fc;
-  padding: 12px;
-  margin-bottom: 10px;
-  border-radius: 6px;
-  border: 1px solid #e0e0e0;
+  background: var(--bg-secondary);
+  padding: var(--spacing-md);
+  margin-bottom: var(--spacing-sm);
+  border-radius: var(--border-radius);
+  border: 1px solid var(--border-color);
+  transition: all var(--transition-base);
+}
+
+.professor-card:hover {
+  background: var(--gray-50);
+  border-color: var(--gray-300);
+  box-shadow: var(--shadow-sm);
+}
+
+.professor-card > div {
+  flex: 1;
 }
 
 .professor-card strong {
-  color: #34495e;
+  display: block;
+  color: var(--text-primary);
+  font-weight: 600;
+  margin-bottom: var(--spacing-xs);
+  font-size: var(--font-size-base);
 }
 
 .professor-card p {
-  margin: 2px 0 0;
-  font-size: 13px;
-  color: #777;
+  margin: 0;
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
 }
 
 .professor-card button {
-  padding: 8px 14px;
-  background: #3498db;
-  color: white;
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: var(--primary-color);
+  color: var(--text-inverse);
   border: none;
-  border-radius: 5px;
+  border-radius: var(--border-radius);
   cursor: pointer;
-  transition: background 0.3s ease;
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  transition: all var(--transition-base);
+  white-space: nowrap;
+  margin-left: var(--spacing-md);
 }
 
 .professor-card button:hover:not(:disabled) {
-  background: #2980b9;
+  background: var(--primary-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
 }
 
 .professor-card button:disabled {
-  background: #95a5a6;
+  background: var(--gray-400);
   cursor: not-allowed;
+  opacity: 0.6;
 }
 
 .committee-table {
   width: 100%;
   border-collapse: collapse;
+  background: var(--bg-primary);
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
 }
 
-.committee-table th, .committee-table td {
-  border: 1px solid #ddd;
-  padding: 10px;
+.committee-table th,
+.committee-table td {
+  padding: var(--spacing-md);
   text-align: left;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .committee-table th {
-  background: #f0f0f0;
+  background: var(--gray-50);
+  color: var(--text-secondary);
+  font-weight: 600;
+  font-size: var(--font-size-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.committee-table tbody tr:hover {
+  background: var(--gray-50);
+}
+
+.committee-table tbody tr:last-child td {
+  border-bottom: none;
 }
 
 .delete-icon {
-  color: #e74c3c;
+  color: var(--error-color);
   cursor: pointer;
-  transition: color 0.3s ease;
+  transition: all var(--transition-base);
+  width: 20px;
+  height: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .delete-icon:hover {
-  color: #c0392b;
+  color: #dc2626;
+  transform: scale(1.1);
 }

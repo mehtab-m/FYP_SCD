@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
 import api from "../../../../api/axios";
+import { useNotification } from "../../../../hooks/useNotification";
+import ConfirmationModal from "../../../../components/ConfirmationModal/ConfirmationModal";
+import InputModal from "../../../../components/InputModal/InputModal";
 import "./ProjectRegistrations.css";
 
 const ProjectRegistrations = () => {
@@ -10,6 +13,11 @@ const ProjectRegistrations = () => {
   const [selectedSupervisorEmail, setSelectedSupervisorEmail] = useState("");
   const [availableSupervisors, setAvailableSupervisors] = useState([]);
   const [currentUserId, setCurrentUserId] = useState(null);
+  const [showConfirmAccept, setShowConfirmAccept] = useState(false);
+  const [showConfirmApprove, setShowConfirmApprove] = useState(false);
+  const [showRejectModal, setShowRejectModal] = useState(false);
+  const [projectToProcess, setProjectToProcess] = useState(null);
+  const { showSuccess, showError, NotificationComponent } = useNotification();
 
   useEffect(() => {
     // Get current user ID from localStorage
@@ -51,84 +59,102 @@ const ProjectRegistrations = () => {
 
   const handleAssignSupervisor = async () => {
     if (!selectedProject || !selectedSupervisorEmail) {
-      alert("Please select a supervisor");
+      showError("Please select a supervisor");
       return;
     }
 
     if (!currentUserId) {
-      alert("User session not found. Please log in again.");
+      showError("User session not found. Please log in again.");
       return;
     }
 
     try {
-    
       await api.post("/admin/projects/assign-supervisor", {
         projectId: selectedProject.id,
         supervisorEmail: selectedSupervisorEmail,
         committeeId: currentUserId
       });
-      alert("Supervisor assigned successfully!");
+      showSuccess("Supervisor assigned successfully!");
       setShowAssignModal(false);
       setSelectedSupervisorEmail("");
       setSelectedProject(null);
       fetchProjectRegistrations();
     } catch (error) {
       console.error("Error assigning supervisor:", error);
-      alert("Failed to assign supervisor. Please try again.");
+      showError("Failed to assign supervisor. Please try again.");
     }
   };
 
-  const handleAcceptProject = async (projectId) => {
-    if (!window.confirm("Are you sure you want to accept this project registration?")) {
-      return;
-    }
+  const handleAcceptProject = (projectId) => {
+    setProjectToProcess(projectId);
+    setShowConfirmAccept(true);
+  };
 
+  const confirmAcceptProject = async () => {
+    if (!projectToProcess) return;
+    setShowConfirmAccept(false);
+    
     try {
       await api.post("/admin/projects/accept", {
-        projectId: projectId
+        projectId: projectToProcess
       });
-      alert("Project registration accepted!");
+      showSuccess("Project registration accepted!");
+      setProjectToProcess(null);
       fetchProjectRegistrations();
     } catch (error) {
       console.error("Error accepting project:", error);
-      alert("Failed to accept project. Please try again.");
+      showError("Failed to accept project. Please try again.");
+      setProjectToProcess(null);
     }
   };
 
-  const handleRejectProject = async (projectId) => {
-    const reason = window.prompt("Please provide a reason for rejection:");
-    if (!reason || reason.trim() === "") {
-      alert("Rejection reason is required");
+  const handleRejectProject = (projectId) => {
+    setProjectToProcess(projectId);
+    setShowRejectModal(true);
+  };
+
+  const confirmRejectProject = async (reason) => {
+    if (!projectToProcess || !reason) {
+      showError("Rejection reason is required");
       return;
     }
+    setShowRejectModal(false);
 
     try {
       await api.post("/admin/projects/reject", {
-        projectId: projectId,
+        projectId: projectToProcess,
         reason: reason.trim()
       });
-      alert("Project registration rejected!");
+      showSuccess("Project registration rejected!");
+      setProjectToProcess(null);
       fetchProjectRegistrations();
     } catch (error) {
       console.error("Error rejecting project:", error);
-      alert("Failed to reject project. Please try again.");
+      showError("Failed to reject project. Please try again.");
+      setProjectToProcess(null);
     }
   };
 
-  const handleApproveProject = async (projectId) => {
-    if (!window.confirm("Are you sure you want to approve this project? This will finalize the supervisor assignment.")) {
-      return;
-    }
+  const handleApproveProject = (projectId) => {
+    setProjectToProcess(projectId);
+    setShowConfirmApprove(true);
+  };
+
+  const confirmApproveProject = async () => {
+    if (!projectToProcess) return;
+    setShowConfirmApprove(false);
 
     try {
       await api.post("/admin/projects/approve", {
-        projectId: projectId
+        projectId: projectToProcess
       });
-      alert("Project approved successfully!");
+      showSuccess("Project approved successfully!");
+      setProjectToProcess(null);
       fetchProjectRegistrations();
     } catch (error) {
       console.error("Error approving project:", error);
-      alert("Failed to approve project. Please try again.");
+      showError("Failed to approve project. Please try again.");
+      setProjectToProcess(null);
     }
   };
 
@@ -154,6 +180,49 @@ const ProjectRegistrations = () => {
 
   return (
     <div className="project-registrations-page">
+      {NotificationComponent}
+      
+      <ConfirmationModal
+        isOpen={showConfirmAccept}
+        onClose={() => {
+          setShowConfirmAccept(false);
+          setProjectToProcess(null);
+        }}
+        onConfirm={confirmAcceptProject}
+        title="Accept Project Registration"
+        message="Are you sure you want to accept this project registration?"
+        confirmText="Accept"
+        cancelText="Cancel"
+      />
+
+      <ConfirmationModal
+        isOpen={showConfirmApprove}
+        onClose={() => {
+          setShowConfirmApprove(false);
+          setProjectToProcess(null);
+        }}
+        onConfirm={confirmApproveProject}
+        title="Approve Project"
+        message="Are you sure you want to approve this project? This will finalize the supervisor assignment."
+        confirmText="Approve"
+        cancelText="Cancel"
+        type="warning"
+      />
+
+      <InputModal
+        isOpen={showRejectModal}
+        onClose={() => {
+          setShowRejectModal(false);
+          setProjectToProcess(null);
+        }}
+        onConfirm={confirmRejectProject}
+        title="Reject Project Registration"
+        message="Please provide a reason for rejection:"
+        placeholder="Enter rejection reason..."
+        confirmText="Reject"
+        cancelText="Cancel"
+        required={true}
+      />
       <h1>Project Registrations</h1>
       <p>Review and manage project registrations submitted by student groups.</p>
 

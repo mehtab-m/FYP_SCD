@@ -1,74 +1,115 @@
 // src/pages/student/ViewMarks/ViewMarks.jsx
 import React, { useEffect, useMemo, useState } from "react";
+import api from "../../../api/axios";
 import "./ViewMarks.css";
 
 const ViewMarks = () => {
-  const [marks, setMarks] = useState([]);
+  const [marksData, setMarksData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [currentUserId, setCurrentUserId] = useState(null);
 
   useEffect(() => {
-    const fetchMarks = async () => {
+    // Get current user ID from localStorage
+    const userStr = localStorage.getItem('user') || sessionStorage.getItem('user');
+    if (userStr) {
       try {
-        setLoading(true);
-        setError("");
-        const res = await fetch("http://localhost:8080/api/marks"); // adjust to your backend
-        if (!res.ok) throw new Error("Failed to fetch marks");
-        const data = await res.json();
-        setMarks(Array.isArray(data) ? data : []);
+        const user = JSON.parse(userStr);
+        setCurrentUserId(user.id || user.userId);
       } catch (e) {
-        setError(e.message || "Something went wrong");
-      } finally {
+        console.error('Error parsing user data:', e);
+        setError('Error parsing user data');
         setLoading(false);
       }
-    };
-    fetchMarks();
+    } else {
+      setError('User session not found. Please log in again.');
+      setLoading(false);
+    }
   }, []);
 
-  const normalized = useMemo(
-    () =>
-      marks.map((m) => ({
-        id: m.id,
-        docType: m.docType,
-        supervisor: Number(m.supervisor ?? 0),
-        committee: Number(m.committee ?? 0),
-        total:
-          m.total !== undefined
-            ? Number(m.total)
-            : Number(m.supervisor ?? 0) + Number(m.committee ?? 0),
-        maxSupervisor: Number(m.maxSupervisor ?? 0), // optional
-        maxCommittee: Number(m.maxCommittee ?? 0), // optional
-        maxTotal:
-          m.maxTotal !== undefined
-            ? Number(m.maxTotal)
-            : Number(m.maxSupervisor ?? 0) + Number(m.maxCommittee ?? 0),
-      })),
-    [marks]
-  );
+  useEffect(() => {
+    if (currentUserId) {
+      fetchMarks();
+    }
+  }, [currentUserId]);
+
+  const fetchMarks = async () => {
+    try {
+      setLoading(true);
+      setError("");
+      const res = await api.get(`/student/marks?userId=${currentUserId}`);
+      
+      if (res.data.error) {
+        setError(res.data.error);
+        setMarksData(null);
+      } else {
+        setMarksData(res.data);
+      }
+    } catch (e) {
+      console.error("Error fetching marks:", e);
+      setError(e.response?.data?.error || e.message || "Failed to fetch marks");
+      setMarksData(null);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const normalized = useMemo(() => {
+    if (!marksData || !marksData.documentMarks) return [];
+    
+    return marksData.documentMarks.map((m) => ({
+      id: m.documentId,
+      docType: m.documentName || m.docType,
+      supervisor: Number(m.supervisor ?? 0),
+      committee: Number(m.committee ?? 0),
+      total: Number(m.total ?? 0),
+      maxSupervisor: Number(m.maxSupervisor ?? 0),
+      maxCommittee: Number(m.maxCommittee ?? 0),
+      maxTotal: Number(m.maxTotal ?? 0),
+    }));
+  }, [marksData]);
 
   const overall = useMemo(() => {
-    const sum = normalized.reduce((acc, m) => acc + m.total, 0);
-    const max = normalized.reduce((acc, m) => acc + (m.maxTotal || 0), 0);
+    if (!marksData) {
+      return { sum: 0, max: 0, percent: null };
+    }
+    
+    const sum = marksData.totalMarks || 0;
+    const max = marksData.maxMarks || 0;
     const percent = max > 0 ? Math.round((sum / max) * 100) : null;
     return { sum, max, percent };
-  }, [normalized]);
+  }, [marksData]);
+
+  const getGradeClass = (grade) => {
+    if (!grade) return "vm-grade-na";
+    const gradeLower = grade.toLowerCase();
+    return `vm-grade-${gradeLower}`;
+  };
 
   return (
     <div className="view-marks">
-      <h2>View Marks</h2>
+      <h2>View Marks & Grade</h2>
+      {marksData && marksData.groupName && (
+        <div className="vm-group-info">
+          <strong>{marksData.groupName}</strong>
+          {marksData.projectTitle && (
+            <span className="vm-project-title"> - {marksData.projectTitle}</span>
+          )}
+        </div>
+      )}
 
       {loading && <div className="vm-status vm-loading">Loading marks...</div>}
       {error && <div className="vm-status vm-error">Error: {error}</div>}
 
-      {!loading && !error && normalized.length === 0 && (
+      {!loading && !error && marksData && normalized.length === 0 && (
         <div className="vm-status vm-empty">No marks available yet.</div>
       )}
 
-      {!loading && !error && normalized.length > 0 && (
+      {!loading && !error && marksData && normalized.length > 0 && (
         <>
           <div className="vm-summary">
             <div className="vm-card">
-              <span className="vm-label">Total:</span>
+              <span className="vm-label">Total Marks:</span>
               <span className="vm-value">
                 {overall.sum}
                 {overall.max ? ` / ${overall.max}` : ""}
@@ -78,6 +119,20 @@ const ViewMarks = () => {
               <div className="vm-card">
                 <span className="vm-label">Overall %:</span>
                 <span className="vm-value">{overall.percent}%</span>
+              </div>
+            )}
+            {marksData.grade && marksData.gradePublished && (
+              <div className="vm-card vm-card-grade">
+                <span className="vm-label">Final Grade:</span>
+                <span className={`vm-value vm-grade ${getGradeClass(marksData.grade)}`}>
+                  {marksData.grade}
+                </span>
+              </div>
+            )}
+            {marksData.gradePublished === false && (
+              <div className="vm-card">
+                <span className="vm-label">Final Grade:</span>
+                <span className="vm-value vm-grade-na">Not Published</span>
               </div>
             )}
           </div>
@@ -98,7 +153,7 @@ const ViewMarks = () => {
                   <td>
                     <span className="vm-mark">
                       {m.supervisor}
-                      {m.maxSupervisor ? (
+                      {m.maxSupervisor > 0 ? (
                         <span className="vm-max"> / {m.maxSupervisor}</span>
                       ) : null}
                     </span>
@@ -106,7 +161,7 @@ const ViewMarks = () => {
                   <td>
                     <span className="vm-mark">
                       {m.committee}
-                      {m.maxCommittee ? (
+                      {m.maxCommittee > 0 ? (
                         <span className="vm-max"> / {m.maxCommittee}</span>
                       ) : null}
                     </span>
@@ -114,7 +169,7 @@ const ViewMarks = () => {
                   <td>
                     <span className="vm-total">
                       {m.total}
-                      {m.maxTotal ? (
+                      {m.maxTotal > 0 ? (
                         <span className="vm-max"> / {m.maxTotal}</span>
                       ) : null}
                     </span>

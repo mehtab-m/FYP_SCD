@@ -1,78 +1,110 @@
+/* CreateMember.css - Professional Design System */
+
 .create-member-container {
-  max-width: 400px;
-  margin: 30px auto;
-  padding: 20px;
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  max-width: 500px;
+  margin: 0 auto;
+  padding: var(--spacing-xl);
+  background: var(--bg-primary);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-md);
+}
+
+.create-member-container h2 {
+  margin-bottom: var(--spacing-xl);
+  color: var(--text-primary);
+  font-size: var(--font-size-2xl);
+  font-weight: 600;
+  text-align: center;
 }
 
 .create-member-form .form-group {
-  margin-bottom: 15px;
+  margin-bottom: var(--spacing-md);
 }
 
 .create-member-form label {
   display: block;
-  font-weight: 600;
-  margin-bottom: 5px;
+  font-weight: 500;
+  margin-bottom: var(--spacing-xs);
+  color: var(--text-primary);
+  font-size: var(--font-size-sm);
 }
 
 .create-member-form input {
   width: 100%;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  transition: border-color 0.3s;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  font-size: var(--font-size-sm);
+  font-family: var(--font-family);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  transition: all var(--transition-base);
 }
 
 .create-member-form input:focus {
-  border-color: #007bff;
   outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px var(--primary-light);
 }
 
-.error-input {
-  border-color: #e74c3c !important;
+.create-member-form input.error-input {
+  border-color: var(--error-color);
+  background: var(--error-light);
 }
 
 .error-text {
-  color: #e74c3c;
-  font-size: 0.85rem;
-  margin-top: 5px;
+  color: var(--error-color);
+  font-size: var(--font-size-xs);
+  margin-top: var(--spacing-xs);
   display: block;
 }
 
 .server-error {
-  background: #fdecea;
-  color: #e74c3c;
-  padding: 10px;
-  border-radius: 6px;
-  margin-bottom: 15px;
-  font-size: 0.9rem;
+  background: var(--error-light);
+  color: var(--error-color);
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius);
+  margin-bottom: var(--spacing-md);
+  font-size: var(--font-size-sm);
   text-align: center;
+  font-weight: 500;
+  border: 1px solid rgba(239, 68, 68, 0.2);
 }
 
 .success-message {
-  background: #e6ffed;
-  color: #2ecc71;
-  padding: 10px;
-  border-radius: 6px;
-  margin-bottom: 15px;
-  font-size: 0.9rem;
+  background: var(--success-light);
+  color: #065f46;
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius);
+  margin-bottom: var(--spacing-md);
+  font-size: var(--font-size-sm);
   text-align: center;
+  font-weight: 500;
+  border: 1px solid rgba(16, 185, 129, 0.2);
 }
 
 .create-member-form button {
   width: 100%;
-  padding: 12px;
-  background: #007bff;
-  color: #fff;
+  padding: var(--spacing-md);
+  background: var(--primary-color);
+  color: var(--text-inverse);
   border: none;
-  border-radius: 6px;
-  font-size: 1rem;
+  border-radius: var(--border-radius);
+  font-size: var(--font-size-base);
+  font-weight: 500;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: all var(--transition-base);
+  margin-top: var(--spacing-sm);
 }
 
-.create-member-form button:hover {
-  background: #0056b3;
+.create-member-form button:hover:not(:disabled) {
+  background: var(--primary-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.create-member-form button:disabled {
+  background: var(--gray-400);
+  cursor: not-allowed;
+  opacity: 0.6;
 }

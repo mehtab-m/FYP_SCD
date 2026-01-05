@@ -1,73 +1,142 @@
+/* DocumentManagement.css - Professional Design System */
+
 .document-container {
-  padding: 20px;
-  background: #f9f9f9;
-  border-radius: 8px;
+  padding: var(--spacing-xl);
+  background: var(--bg-primary);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-md);
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-h2 {
-  color: #333;
-  margin-bottom: 15px;
+.document-container h2 {
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-xl);
+  font-size: var(--font-size-2xl);
+  font-weight: 600;
 }
 
 .error-box {
-  background: #ffdddd;
-  color: #d8000c;
-  padding: 10px;
-  margin-bottom: 15px;
-  border-radius: 5px;
+  background: var(--error-light);
+  color: var(--error-color);
+  padding: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+  border-radius: var(--border-radius);
+  font-weight: 500;
+  text-align: center;
+  font-size: var(--font-size-sm);
+  border: 1px solid rgba(239, 68, 68, 0.2);
 }
 
 .add-document {
-  margin-bottom: 20px;
+  margin-bottom: var(--spacing-xl);
   display: flex;
-  gap: 10px;
+  gap: var(--spacing-sm);
   flex-wrap: wrap;
+  align-items: flex-end;
+  padding: var(--spacing-md);
+  background: var(--bg-secondary);
+  border-radius: var(--border-radius);
+  border: 1px solid var(--border-color);
 }
 
 .add-document input {
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  font-size: var(--font-size-sm);
+  font-family: var(--font-family);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  transition: all var(--transition-base);
+  flex: 1;
+  min-width: 200px;
+}
+
+.add-document input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px var(--primary-light);
 }
 
 .add-document button {
-  background: #007bff;
-  color: white;
+  background: var(--primary-color);
+  color: var(--text-inverse);
   border: none;
-  padding: 8px 14px;
-  border-radius: 5px;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--border-radius);
   cursor: pointer;
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  transition: all var(--transition-base);
+  white-space: nowrap;
 }
 
-.add-document button:hover {
-  background: #0056b3;
+.add-document button:hover:not(:disabled) {
+  background: var(--primary-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+.add-document button:disabled {
+  background: var(--gray-400);
+  cursor: not-allowed;
+  opacity: 0.6;
 }
 
 .document-list {
-  margin-top: 20px;
+  margin-top: var(--spacing-xl);
 }
 
 .document-table {
   width: 100%;
   border-collapse: collapse;
+  background: var(--bg-primary);
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
 }
 
 .document-table th,
 .document-table td {
-  border: 1px solid #ddd;
-  padding: 10px;
-  text-align: center;
+  padding: var(--spacing-md);
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .document-table th {
-  background: #f0f0f0;
+  background: var(--gray-50);
+  color: var(--text-secondary);
+  font-weight: 600;
+  font-size: var(--font-size-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.document-table tbody tr:hover {
+  background: var(--gray-50);
+}
+
+.document-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.document-table td:last-child {
+  text-align: center;
 }
 
 .delete-icon {
-  color: #dc3545;
+  color: var(--error-color);
   cursor: pointer;
+  transition: all var(--transition-base);
+  width: 20px;
+  height: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .delete-icon:hover {
-  color: #a71d2a;
+  color: #dc2626;
+  transform: scale(1.1);
 }

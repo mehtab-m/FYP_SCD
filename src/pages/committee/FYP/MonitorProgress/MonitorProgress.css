@@ -1,180 +1,288 @@
+/* MonitorProgress.css - Professional Design System */
+
 .monitor-progress-page {
-  padding: 20px;
+  padding: var(--spacing-xl);
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
 .page-header {
-  margin-bottom: 30px;
+  margin-bottom: var(--spacing-xl);
 }
 
 .page-header h1 {
-  margin-bottom: 10px;
-  color: #333;
+  margin-bottom: var(--spacing-sm);
+  color: var(--text-primary);
+  font-size: var(--font-size-2xl);
+  font-weight: 600;
 }
 
 .page-header > p {
-  margin-bottom: 20px;
-  color: #666;
+  margin-bottom: var(--spacing-md);
+  color: var(--text-secondary);
+  font-size: var(--font-size-base);
 }
 
 .filter-section {
-  margin-bottom: 25px;
+  margin-bottom: var(--spacing-xl);
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md);
+  background: var(--bg-primary);
+  border-radius: var(--border-radius);
+  border: 1px solid var(--border-color);
 }
 
 .filter-section label {
   font-weight: 500;
-  color: #333;
+  color: var(--text-primary);
+  font-size: var(--font-size-sm);
 }
 
 .filter-select {
-  padding: 8px 15px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  font-size: 14px;
-  background-color: white;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  font-size: var(--font-size-sm);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
   cursor: pointer;
+  transition: all var(--transition-base);
 }
 
 .filter-select:focus {
   outline: none;
-  border-color: #007bff;
-  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px var(--primary-light);
 }
 
 .loading-container,
 .empty-state {
   text-align: center;
-  padding: 40px;
-  background-color: #f8f9fa;
-  border-radius: 8px;
-  margin-top: 20px;
+  padding: var(--spacing-xl);
+  background: var(--bg-secondary);
+  border-radius: var(--border-radius-lg);
+  margin-top: var(--spacing-lg);
 }
 
 .empty-state p {
-  color: #666;
+  color: var(--text-secondary);
   margin: 0;
+  font-size: var(--font-size-base);
 }
 
 .progress-content {
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: var(--spacing-xl);
 }
 
 .progress-section {
-  margin-bottom: 30px;
+  margin-bottom: var(--spacing-xl);
 }
 
 .progress-section h2 {
-  margin-bottom: 20px;
-  color: #333;
-  font-size: 22px;
-  border-bottom: 2px solid #e0e0e0;
-  padding-bottom: 10px;
+  margin-bottom: var(--spacing-lg);
+  color: var(--text-primary);
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+  padding-bottom: var(--spacing-md);
+  border-bottom: 2px solid var(--border-color);
 }
 
 .progress-cards {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: var(--spacing-lg);
 }
 
 .progress-card {
-  background: white;
-  border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  border: 1px solid #e0e0e0;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  background: var(--bg-primary);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-color);
+  transition: all var(--transition-base);
 }
 
 .progress-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--shadow-md);
+  border-color: var(--gray-300);
 }
 
 .card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 15px;
-  padding-bottom: 15px;
-  border-bottom: 1px solid #e0e0e0;
+  margin-bottom: var(--spacing-md);
+  padding-bottom: var(--spacing-md);
+  border-bottom: 1px solid var(--border-color);
 }
 
 .card-header h3 {
   margin: 0;
-  color: #333;
-  font-size: 18px;
+  color: var(--text-primary);
+  font-size: var(--font-size-lg);
+  font-weight: 600;
 }
 
 .status-badge {
-  padding: 5px 12px;
+  padding: var(--spacing-xs) var(--spacing-sm);
   border-radius: 12px;
-  font-size: 12px;
+  font-size: var(--font-size-xs);
   font-weight: 500;
-  background-color: #d1ecf1;
-  color: #0c5460;
+}
+
+.status-badge.status-completed,
+.status-badge.status-up-to-date {
+  background: var(--success-light);
+  color: #065f46;
+}
+
+.status-badge.status-in-progress,
+.status-badge.status-active,
+.status-badge.status-started {
+  background: var(--info-light);
+  color: #1e40af;
+}
+
+.status-badge.status-moderate,
+.status-badge.status-not-started {
+  background: var(--warning-light);
+  color: #92400e;
+}
+
+.status-badge.status-behind,
+.status-badge.status-inactive {
+  background: var(--error-light);
+  color: #991b1b;
 }
 
 .card-body {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: var(--spacing-sm);
 }
 
 .info-row {
-  color: #666;
-  font-size: 14px;
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
 }
 
 .info-row strong {
-  color: #333;
-  margin-right: 5px;
+  color: var(--text-primary);
+  margin-right: var(--spacing-xs);
 }
 
 .milestones {
-  margin-top: 10px;
-  padding-top: 10px;
-  border-top: 1px solid #f0f0f0;
+  margin-top: var(--spacing-md);
+  padding-top: var(--spacing-md);
+  border-top: 1px solid var(--border-color);
 }
 
 .milestones strong {
   display: block;
-  margin-bottom: 8px;
-  color: #333;
+  margin-bottom: var(--spacing-sm);
+  color: var(--text-primary);
+  font-size: var(--font-size-sm);
 }
 
 .milestones ul {
   margin: 0;
-  padding-left: 20px;
+  padding-left: var(--spacing-lg);
   list-style-type: none;
 }
 
 .milestones li {
-  padding: 5px 0;
-  color: #666;
-  font-size: 14px;
+  padding: var(--spacing-xs) 0;
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
   position: relative;
-  padding-left: 20px;
+  padding-left: var(--spacing-lg);
 }
 
 .milestones li::before {
   content: "•";
   position: absolute;
   left: 0;
-  color: #999;
+  color: var(--gray-400);
 }
 
 .milestones li.completed {
-  color: #28a745;
+  color: var(--success-color);
 }
 
 .milestones li.completed::before {
   content: "✓";
-  color: #28a745;
+  color: var(--success-color);
   font-weight: bold;
 }
 
+.progress-bar-container {
+  width: 100%;
+  height: 20px;
+  background-color: var(--gray-200);
+  border-radius: 10px;
+  overflow: hidden;
+  margin: var(--spacing-sm) 0;
+}
+
+.progress-bar {
+  height: 100%;
+  background-color: var(--primary-color);
+  transition: width var(--transition-slow);
+  border-radius: 10px;
+}
+
+.progress-text {
+  display: block;
+  margin-top: var(--spacing-xs);
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+}
+
+.milestone-name {
+  display: inline-block;
+  min-width: 150px;
+}
+
+.milestone-status {
+  margin-left: var(--spacing-sm);
+  font-size: var(--font-size-xs);
+  padding: 2px var(--spacing-sm);
+  border-radius: var(--border-radius-sm);
+}
+
+.milestone-status.completed {
+  background-color: var(--success-light);
+  color: #065f46;
+}
+
+.milestone-status.pending {
+  background-color: var(--warning-light);
+  color: #92400e;
+}
+
+.milestone-approval-status {
+  margin-left: var(--spacing-sm);
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+
+.milestone-approval-status.status-approved {
+  background-color: var(--success-light);
+  color: #065f46;
+}
+
+.milestone-approval-status.status-pending {
+  background-color: var(--warning-light);
+  color: #92400e;
+}
+
+.milestone-approval-status.status-rejected {
+  background-color: var(--error-light);
+  color: #991b1b;
+}

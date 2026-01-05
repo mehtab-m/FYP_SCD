@@ -1,25 +1,198 @@
+/* ProjectRegistration.css - Professional Design System */
+
 .project-registration {
-    padding: 20px;
-  }
-  
-  .project-registration table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  .project-registration th,
-  .project-registration td {
-    border: 1px solid #ddd;
-    padding: 8px;
-  }
-  
-  .status.pending {
-    color: orange;
-  }
-  .status.accepted {
-    color: green;
-  }
-  .status.rejected {
-    color: red;
-  }
-  
+  padding: var(--spacing-xl);
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.project-registration h2 {
+  margin-bottom: var(--spacing-xl);
+  color: var(--text-primary);
+  font-size: var(--font-size-2xl);
+  font-weight: 600;
+}
+
+.project-registration h3 {
+  margin-bottom: var(--spacing-md);
+  color: var(--text-primary);
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+}
+
+.project-registration h4 {
+  margin-bottom: var(--spacing-sm);
+  color: var(--text-primary);
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+}
+
+/* Status Display */
+.status-display {
+  padding: var(--spacing-lg);
+  background: var(--bg-secondary);
+  border-radius: var(--border-radius-lg);
+  margin-top: var(--spacing-lg);
+  border: 1px solid var(--border-color);
+}
+
+.status-display h3 {
+  margin: 0 0 var(--spacing-md) 0;
+  color: var(--success-color);
+}
+
+.status-display p {
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: 12px;
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  margin-left: var(--spacing-sm);
+}
+
+.status.pending,
+.status-badge.pending {
+  background: var(--warning-light);
+  color: #92400e;
+}
+
+.status.accepted,
+.status-badge.accepted {
+  background: var(--success-light);
+  color: #065f46;
+}
+
+.status.rejected,
+.status-badge.rejected {
+  background: var(--error-light);
+  color: #991b1b;
+}
+
+/* Form Styles */
+.project-registration-form {
+  background: var(--bg-primary);
+  padding: var(--spacing-xl);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border-color);
+}
+
+.form-group {
+  margin-bottom: var(--spacing-md);
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: var(--spacing-xs);
+  font-weight: 500;
+  color: var(--text-primary);
+  font-size: var(--font-size-sm);
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  font-size: var(--font-size-sm);
+  font-family: var(--font-family);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  transition: all var(--transition-base);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px var(--primary-light);
+}
+
+/* Table Styles */
+.project-registration table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--bg-primary);
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  margin-top: var(--spacing-md);
+}
+
+.project-registration th,
+.project-registration td {
+  padding: var(--spacing-md);
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.project-registration th {
+  background: var(--gray-50);
+  color: var(--text-secondary);
+  font-weight: 600;
+  font-size: var(--font-size-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.project-registration tbody tr:hover {
+  background: var(--gray-50);
+}
+
+.project-registration tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Buttons */
+.submit-button {
+  padding: var(--spacing-md) var(--spacing-xl);
+  background: var(--primary-color);
+  color: var(--text-inverse);
+  border: none;
+  border-radius: var(--border-radius);
+  font-size: var(--font-size-base);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  margin-top: var(--spacing-md);
+}
+
+.submit-button:hover:not(:disabled) {
+  background: var(--primary-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.submit-button:disabled {
+  background: var(--gray-400);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Supervisor Preferences Info */
+.supervisor-preferences-info {
+  background: var(--bg-secondary);
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius);
+  margin-top: var(--spacing-sm);
+  border-left: 4px solid var(--primary-color);
+}
+
+.supervisor-preferences-info p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+}
