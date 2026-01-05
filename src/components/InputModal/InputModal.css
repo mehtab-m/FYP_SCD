@@ -1,10 +1,145 @@
-.input-modal {
-  max-width: 500px;
+/* InputModal.css */
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(25, 25, 25, 0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(6px);
+  animation: fadeIn 0.3s ease-in-out;
 }
 
-.input-modal .modal-body p {
+.modal-content {
+  background: #fff;
+  border-radius: 14px;
+  width: 480px;
+  max-width: 95%;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  animation: slideUp 0.35s ease-out;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 22px;
+  background: linear-gradient(135deg, #00c6ff, #0072ff);
+  color: #fff;
+}
+
+.modal-title {
   margin: 0;
-  color: var(--text-primary);
-  line-height: 1.6;
+  font-size: 1.25rem;
+  font-weight: 600;
 }
 
+.modal-close {
+  background: transparent;
+  border: none;
+  font-size: 1.6rem;
+  color: #fff;
+  cursor: pointer;
+  transition: transform 0.25s ease;
+}
+
+.modal-close:hover {
+  transform: rotate(90deg);
+}
+
+.modal-body {
+  padding: 22px;
+  font-size: 0.95rem;
+  color: #333;
+  line-height: 1.5;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  resize: none;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.form-textarea:focus {
+  border-color: #0072ff;
+  box-shadow: 0 0 6px rgba(0, 114, 255, 0.3);
+  outline: none;
+}
+
+.form-error {
+  margin-top: 8px;
+  font-size: 0.85rem;
+  color: #e63946;
+  font-weight: 500;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 14px;
+  padding: 18px 22px;
+  background: #f9f9f9;
+}
+
+.btn {
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.btn-outline {
+  background: transparent;
+  border: 2px solid #ccc;
+  color: #555;
+}
+
+.btn-outline:hover {
+  border-color: #0072ff;
+  color: #0072ff;
+  background: rgba(0, 114, 255, 0.05);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #0072ff, #00c6ff);
+  border: none;
+  color: #fff;
+}
+
+.btn-primary:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+.btn-primary:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  transform: none;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(40px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}

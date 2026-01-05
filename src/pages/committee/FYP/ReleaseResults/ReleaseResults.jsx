@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import api from "../../../../api/axios";
-import { useNotification } from "../../../../hooks/useNotification";
+import { useNotification } from "../../../../hooks/useNotification.jsx";
 import "./ReleaseResults.css";
 
 const ReleaseResults = () => {

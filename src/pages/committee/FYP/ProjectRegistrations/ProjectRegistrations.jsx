@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import api from "../../../../api/axios";
-import { useNotification } from "../../../../hooks/useNotification";
+import { useNotification } from "../../../../hooks/useNotification.jsx";
 import ConfirmationModal from "../../../../components/ConfirmationModal/ConfirmationModal";
 import InputModal from "../../../../components/InputModal/InputModal";
 import "./ProjectRegistrations.css";
