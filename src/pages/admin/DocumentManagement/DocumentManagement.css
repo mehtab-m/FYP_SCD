@@ -1,85 +1,178 @@
-/* DocumentManagement.css - Professional Design System */
+/* ============================================
+   📄 DOCUMENT MANAGEMENT - Premium PRO Design
+   ============================================ */
 
 .document-container {
-  padding: var(--spacing-xl);
+  padding: var(--spacing-2xl);
   background: var(--bg-primary);
-  border-radius: var(--border-radius-lg);
-  box-shadow: var(--shadow-md);
+  border-radius: var(--border-radius-xl);
+  box-shadow: var(--shadow-2xl);
   max-width: 1200px;
   margin: 0 auto;
+  animation: fadeInUp 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  position: relative;
+  overflow: hidden;
+}
+
+.document-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: linear-gradient(90deg, var(--info-color), var(--accent-color), var(--success-color));
+  background-size: 200% 100%;
+  animation: gradientFlow 4s infinite;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes gradientFlow {
+  0% { background-position: 0% center; }
+  50% { background-position: 100% center; }
+  100% { background-position: 0% center; }
 }
 
 .document-container h2 {
   color: var(--text-primary);
   margin-bottom: var(--spacing-xl);
-  font-size: var(--font-size-2xl);
-  font-weight: 600;
+  font-size: var(--font-size-3xl);
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--info-color), var(--accent-color));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  position: relative;
+}
+
+.document-container h2::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(90deg, var(--info-color), var(--accent-color));
+  border-radius: 2px;
 }
 
 .error-box {
-  background: var(--error-light);
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(248, 113, 113, 0.05));
   color: var(--error-color);
-  padding: var(--spacing-md);
-  margin-bottom: var(--spacing-md);
-  border-radius: var(--border-radius);
-  font-weight: 500;
+  padding: var(--spacing-lg);
+  margin-bottom: var(--spacing-lg);
+  border-radius: var(--border-radius-lg);
+  font-weight: 600;
   text-align: center;
   font-size: var(--font-size-sm);
-  border: 1px solid rgba(239, 68, 68, 0.2);
+  border: 2px solid rgba(239, 68, 68, 0.3);
+  animation: shake 0.5s ease;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+  20%, 40%, 60%, 80% { transform: translateX(5px); }
 }
 
 .add-document {
-  margin-bottom: var(--spacing-xl);
+  margin-bottom: var(--spacing-2xl);
   display: flex;
-  gap: var(--spacing-sm);
+  gap: var(--spacing-md);
   flex-wrap: wrap;
   align-items: flex-end;
-  padding: var(--spacing-md);
-  background: var(--bg-secondary);
-  border-radius: var(--border-radius);
-  border: 1px solid var(--border-color);
+  padding: var(--spacing-lg);
+  background: linear-gradient(135deg, var(--bg-secondary), var(--bg-primary));
+  border-radius: var(--border-radius-lg);
+  border: 2px solid var(--border-color);
+  animation: slideInDown 0.5s ease 0.2s backwards;
+  position: relative;
+  overflow: hidden;
+}
+
+.add-document::before {
+  content: '📁';
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 60px;
+  opacity: 0.05;
+}
+
+@keyframes slideInDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .add-document input {
-  padding: var(--spacing-sm) var(--spacing-md);
-  border: 1px solid var(--border-color);
-  border-radius: var(--border-radius);
-  font-size: var(--font-size-sm);
+  padding: var(--spacing-md) var(--spacing-lg);
+  border: 2px solid var(--border-color);
+  border-radius: var(--border-radius-lg);
+  font-size: var(--font-size-base);
   font-family: var(--font-family);
   background: var(--bg-primary);
   color: var(--text-primary);
-  transition: all var(--transition-base);
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   flex: 1;
-  min-width: 200px;
+  min-width: 220px;
+}
+
+.add-document input:hover {
+  border-color: var(--border-color-hover);
 }
 
 .add-document input:focus {
   outline: none;
-  border-color: var(--primary-color);
-  box-shadow: 0 0 0 3px var(--primary-light);
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 4px var(--accent-light), var(--shadow-md);
+  transform: translateY(-2px);
 }
 
 .add-document button {
-  background: var(--primary-color);
+  background: linear-gradient(135deg, var(--info-color) 0%, var(--accent-color) 100%);
   color: var(--text-inverse);
   border: none;
-  padding: var(--spacing-sm) var(--spacing-md);
-  border-radius: var(--border-radius);
+  padding: var(--spacing-md) var(--spacing-xl);
+  border-radius: var(--border-radius-lg);
   cursor: pointer;
   font-size: var(--font-size-sm);
-  font-weight: 500;
+  font-weight: 700;
   transition: all var(--transition-base);
   white-space: nowrap;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  position: relative;
+  overflow: hidden;
+}
+
+.add-document button::before {
+  content: '+';
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.2rem;
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.add-document button:hover:not(:disabled)::before {
+  opacity: 1;
 }
 
 .add-document button:hover:not(:disabled) {
-  background: var(--primary-hover);
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-sm);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-xl);
+  padding-left: var(--spacing-2xl);
 }
 
 .add-document button:disabled {
-  background: var(--gray-400);
+  background: var(--border-color);
   cursor: not-allowed;
   opacity: 0.6;
 }
@@ -92,29 +185,52 @@
   width: 100%;
   border-collapse: collapse;
   background: var(--bg-primary);
-  border-radius: var(--border-radius-lg);
+  border-radius: var(--border-radius-xl);
   overflow: hidden;
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-lg);
+  animation: scaleIn 0.5s ease 0.4s backwards;
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
 }
 
 .document-table th,
 .document-table td {
-  padding: var(--spacing-md);
+  padding: var(--spacing-lg);
   text-align: left;
   border-bottom: 1px solid var(--border-color);
 }
 
 .document-table th {
-  background: var(--gray-50);
-  color: var(--text-secondary);
+  background: linear-gradient(135deg, var(--info-color) 0%, var(--accent-color) 100%);
+  color: var(--text-inverse);
   font-weight: 600;
   font-size: var(--font-size-sm);
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 1px;
+}
+
+.document-table tbody tr {
+  transition: all var(--transition-base);
+  animation: slideInRight 0.4s ease backwards;
+}
+
+.document-table tbody tr:nth-child(1) { animation-delay: 0.1s; }
+.document-table tbody tr:nth-child(2) { animation-delay: 0.15s; }
+.document-table tbody tr:nth-child(3) { animation-delay: 0.2s; }
+.document-table tbody tr:nth-child(4) { animation-delay: 0.25s; }
+.document-table tbody tr:nth-child(5) { animation-delay: 0.3s; }
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
 }
 
 .document-table tbody tr:hover {
-  background: var(--gray-50);
+  background: linear-gradient(90deg, var(--accent-light), transparent);
+  transform: scale(1.01);
 }
 
 .document-table tbody tr:last-child td {
@@ -129,14 +245,17 @@
   color: var(--error-color);
   cursor: pointer;
   transition: all var(--transition-base);
-  width: 20px;
-  height: 20px;
+  width: 28px;
+  height: 28px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  border-radius: var(--border-radius);
+  padding: var(--spacing-xs);
 }
 
 .delete-icon:hover {
-  color: #dc2626;
-  transform: scale(1.1);
+  color: #fff;
+  background: var(--error-color);
+  transform: scale(1.2) rotate(10deg);
 }

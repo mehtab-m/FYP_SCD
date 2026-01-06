@@ -1,163 +1,275 @@
-/* MonitorProgress.css - Professional Design System */
+/* ============================================
+   📈 MONITOR PROGRESS - Premium PRO Design
+   ============================================ */
 
 .monitor-progress-page {
   padding: var(--spacing-xl);
   max-width: 1400px;
   margin: 0 auto;
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .page-header {
-  margin-bottom: var(--spacing-xl);
+  margin-bottom: var(--spacing-2xl);
+  animation: fadeInUp 0.6s ease;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .page-header h1 {
   margin-bottom: var(--spacing-sm);
   color: var(--text-primary);
-  font-size: var(--font-size-2xl);
-  font-weight: 600;
+  font-size: var(--font-size-3xl);
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--accent-color), var(--info-color));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .page-header > p {
-  margin-bottom: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
   color: var(--text-secondary);
-  font-size: var(--font-size-base);
+  font-size: var(--font-size-lg);
 }
 
 .filter-section {
-  margin-bottom: var(--spacing-xl);
+  margin-bottom: var(--spacing-2xl);
   display: flex;
   align-items: center;
-  gap: var(--spacing-sm);
-  padding: var(--spacing-md);
+  gap: var(--spacing-md);
+  padding: var(--spacing-lg);
   background: var(--bg-primary);
-  border-radius: var(--border-radius);
+  border-radius: var(--border-radius-xl);
   border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-lg);
+  animation: fadeInUp 0.5s ease 0.1s backwards;
 }
 
 .filter-section label {
-  font-weight: 500;
+  font-weight: 600;
   color: var(--text-primary);
   font-size: var(--font-size-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .filter-select {
-  padding: var(--spacing-sm) var(--spacing-md);
-  border: 1px solid var(--border-color);
-  border-radius: var(--border-radius);
-  font-size: var(--font-size-sm);
+  padding: var(--spacing-md) var(--spacing-lg);
+  border: 2px solid var(--border-color);
+  border-radius: var(--border-radius-lg);
+  font-size: var(--font-size-base);
   background-color: var(--bg-primary);
   color: var(--text-primary);
   cursor: pointer;
-  transition: all var(--transition-base);
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  min-width: 200px;
+}
+
+.filter-select:hover {
+  border-color: var(--border-color-hover);
 }
 
 .filter-select:focus {
   outline: none;
-  border-color: var(--primary-color);
-  box-shadow: 0 0 0 3px var(--primary-light);
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 4px var(--accent-light);
 }
 
 .loading-container,
 .empty-state {
   text-align: center;
-  padding: var(--spacing-xl);
-  background: var(--bg-secondary);
-  border-radius: var(--border-radius-lg);
-  margin-top: var(--spacing-lg);
+  padding: var(--spacing-2xl);
+  background: var(--bg-primary);
+  border-radius: var(--border-radius-xl);
+  margin-top: var(--spacing-xl);
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--border-color);
 }
 
 .empty-state p {
   color: var(--text-secondary);
   margin: 0;
-  font-size: var(--font-size-base);
+  font-size: var(--font-size-lg);
 }
 
 .progress-content {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-xl);
+  gap: var(--spacing-2xl);
 }
 
 .progress-section {
   margin-bottom: var(--spacing-xl);
+  animation: fadeInUp 0.5s ease backwards;
 }
 
+.progress-section:nth-child(1) { animation-delay: 0.1s; }
+.progress-section:nth-child(2) { animation-delay: 0.2s; }
+.progress-section:nth-child(3) { animation-delay: 0.3s; }
+
 .progress-section h2 {
-  margin-bottom: var(--spacing-lg);
+  margin-bottom: var(--spacing-xl);
   color: var(--text-primary);
-  font-size: var(--font-size-xl);
-  font-weight: 600;
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
   padding-bottom: var(--spacing-md);
-  border-bottom: 2px solid var(--border-color);
+  border-bottom: 3px solid transparent;
+  background: linear-gradient(var(--bg-secondary), var(--bg-secondary)) padding-box,
+              linear-gradient(135deg, var(--accent-color), var(--info-color)) border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.progress-section h2::before {
+  content: '📊';
+  font-size: 1.2em;
 }
 
 .progress-cards {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: var(--spacing-lg);
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: var(--spacing-xl);
 }
 
 .progress-card {
   background: var(--bg-primary);
-  border-radius: var(--border-radius-lg);
-  padding: var(--spacing-lg);
-  box-shadow: var(--shadow-sm);
+  border-radius: var(--border-radius-xl);
+  padding: var(--spacing-xl);
+  box-shadow: var(--shadow-lg);
   border: 1px solid var(--border-color);
-  transition: all var(--transition-base);
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  animation: scaleIn 0.5s ease backwards;
+  position: relative;
+  overflow: hidden;
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.progress-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 5px;
+  height: 100%;
+  background: linear-gradient(180deg, var(--accent-color), var(--info-color));
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.4s ease;
+}
+
+.progress-card:hover::before {
+  transform: scaleY(1);
 }
 
 .progress-card:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
-  border-color: var(--gray-300);
+  transform: translateY(-8px) translateX(5px);
+  box-shadow: var(--shadow-2xl);
+  border-color: var(--accent-color);
 }
 
 .card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: var(--spacing-md);
-  padding-bottom: var(--spacing-md);
-  border-bottom: 1px solid var(--border-color);
+  margin-bottom: var(--spacing-lg);
+  padding-bottom: var(--spacing-lg);
+  border-bottom: 2px solid var(--border-color);
 }
 
 .card-header h3 {
   margin: 0;
   color: var(--text-primary);
-  font-size: var(--font-size-lg);
-  font-weight: 600;
+  font-size: var(--font-size-xl);
+  font-weight: 700;
 }
 
 .status-badge {
-  padding: var(--spacing-xs) var(--spacing-sm);
-  border-radius: 12px;
+  padding: var(--spacing-xs) var(--spacing-md);
+  border-radius: 20px;
   font-size: var(--font-size-xs);
-  font-weight: 500;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.status-badge::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  animation: blink 1.5s infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
 }
 
 .status-badge.status-completed,
 .status-badge.status-up-to-date {
-  background: var(--success-light);
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(6, 182, 212, 0.1));
   color: #065f46;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.status-badge.status-completed::before,
+.status-badge.status-up-to-date::before {
+  background: var(--success-color);
 }
 
 .status-badge.status-in-progress,
 .status-badge.status-active,
 .status-badge.status-started {
-  background: var(--info-light);
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(99, 102, 241, 0.1));
   color: #1e40af;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.status-badge.status-in-progress::before,
+.status-badge.status-active::before,
+.status-badge.status-started::before {
+  background: var(--info-color);
 }
 
 .status-badge.status-moderate,
 .status-badge.status-not-started {
-  background: var(--warning-light);
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(251, 191, 36, 0.1));
   color: #92400e;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.status-badge.status-moderate::before,
+.status-badge.status-not-started::before {
+  background: #f59e0b;
 }
 
 .status-badge.status-behind,
 .status-badge.status-inactive {
-  background: var(--error-light);
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(248, 113, 113, 0.1));
   color: #991b1b;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.status-badge.status-behind::before,
+.status-badge.status-inactive::before {
+  background: var(--error-color);
 }
 
 .card-body {
@@ -169,24 +281,28 @@
 .info-row {
   color: var(--text-secondary);
   font-size: var(--font-size-sm);
+  padding: var(--spacing-xs) 0;
 }
 
 .info-row strong {
   color: var(--text-primary);
   margin-right: var(--spacing-xs);
+  font-weight: 600;
 }
 
 .milestones {
-  margin-top: var(--spacing-md);
-  padding-top: var(--spacing-md);
-  border-top: 1px solid var(--border-color);
+  margin-top: var(--spacing-lg);
+  padding-top: var(--spacing-lg);
+  border-top: 2px dashed var(--border-color);
 }
 
 .milestones strong {
   display: block;
-  margin-bottom: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
   color: var(--text-primary);
   font-size: var(--font-size-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .milestones ul {
@@ -196,18 +312,25 @@
 }
 
 .milestones li {
-  padding: var(--spacing-xs) 0;
+  padding: var(--spacing-sm) 0;
   color: var(--text-secondary);
   font-size: var(--font-size-sm);
   position: relative;
   padding-left: var(--spacing-lg);
+  transition: all var(--transition-base);
+}
+
+.milestones li:hover {
+  color: var(--text-primary);
+  transform: translateX(5px);
 }
 
 .milestones li::before {
   content: "•";
   position: absolute;
   left: 0;
-  color: var(--gray-400);
+  color: var(--accent-color);
+  font-weight: bold;
 }
 
 .milestones li.completed {
@@ -222,67 +345,102 @@
 
 .progress-bar-container {
   width: 100%;
-  height: 20px;
-  background-color: var(--gray-200);
-  border-radius: 10px;
+  height: 24px;
+  background: linear-gradient(135deg, var(--bg-secondary), var(--bg-primary));
+  border-radius: 12px;
   overflow: hidden;
-  margin: var(--spacing-sm) 0;
+  margin: var(--spacing-md) 0;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--border-color);
 }
 
 .progress-bar {
   height: 100%;
-  background-color: var(--primary-color);
-  transition: width var(--transition-slow);
-  border-radius: 10px;
+  background: linear-gradient(90deg, var(--accent-color), var(--info-color), var(--success-color));
+  background-size: 200% 100%;
+  transition: width 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  border-radius: 12px;
+  animation: progressGlow 2s infinite;
+  position: relative;
+}
+
+@keyframes progressGlow {
+  0%, 100% { box-shadow: 0 0 10px rgba(99, 102, 241, 0.3); }
+  50% { box-shadow: 0 0 20px rgba(99, 102, 241, 0.5); }
+}
+
+.progress-bar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
 }
 
 .progress-text {
   display: block;
-  margin-top: var(--spacing-xs);
-  font-size: var(--font-size-xs);
+  margin-top: var(--spacing-sm);
+  font-size: var(--font-size-sm);
   color: var(--text-secondary);
+  font-weight: 600;
 }
 
 .milestone-name {
   display: inline-block;
   min-width: 150px;
+  font-weight: 500;
 }
 
 .milestone-status {
   margin-left: var(--spacing-sm);
   font-size: var(--font-size-xs);
-  padding: 2px var(--spacing-sm);
-  border-radius: var(--border-radius-sm);
+  padding: 4px var(--spacing-sm);
+  border-radius: var(--border-radius);
+  font-weight: 600;
 }
 
 .milestone-status.completed {
-  background-color: var(--success-light);
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(6, 182, 212, 0.1));
   color: #065f46;
+  border: 1px solid rgba(16, 185, 129, 0.3);
 }
 
 .milestone-status.pending {
-  background-color: var(--warning-light);
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(251, 191, 36, 0.1));
   color: #92400e;
+  border: 1px solid rgba(245, 158, 11, 0.3);
 }
 
 .milestone-approval-status {
   margin-left: var(--spacing-sm);
   font-size: 11px;
-  padding: 2px 6px;
-  border-radius: 3px;
+  padding: 4px 8px;
+  border-radius: var(--border-radius);
+  font-weight: 600;
 }
 
 .milestone-approval-status.status-approved {
-  background-color: var(--success-light);
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(6, 182, 212, 0.1));
   color: #065f46;
+  border: 1px solid rgba(16, 185, 129, 0.3);
 }
 
 .milestone-approval-status.status-pending {
-  background-color: var(--warning-light);
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(251, 191, 36, 0.1));
   color: #92400e;
+  border: 1px solid rgba(245, 158, 11, 0.3);
 }
 
 .milestone-approval-status.status-rejected {
-  background-color: var(--error-light);
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(248, 113, 113, 0.1));
   color: #991b1b;
+  border: 1px solid rgba(239, 68, 68, 0.3);
 }

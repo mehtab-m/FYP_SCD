@@ -1,27 +1,50 @@
-/* ProjectRegistration.css - Professional Design System */
+/* ============================================
+   📝 PROJECT REGISTRATION - Premium PRO Design
+   ============================================ */
 
 .project-registration {
   padding: var(--spacing-xl);
   max-width: 1000px;
   margin: 0 auto;
+  animation: fadeInUp 0.6s ease;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .project-registration h2 {
   margin-bottom: var(--spacing-xl);
   color: var(--text-primary);
-  font-size: var(--font-size-2xl);
-  font-weight: 600;
+  font-size: var(--font-size-3xl);
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--accent-color), var(--info-color));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .project-registration h3 {
-  margin-bottom: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
   color: var(--text-primary);
   font-size: var(--font-size-xl);
-  font-weight: 600;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.project-registration h3::before {
+  content: '';
+  width: 4px;
+  height: 24px;
+  background: linear-gradient(180deg, var(--accent-color), var(--info-color));
+  border-radius: 2px;
 }
 
 .project-registration h4 {
-  margin-bottom: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
   color: var(--text-primary);
   font-size: var(--font-size-lg);
   font-weight: 600;
@@ -29,96 +52,177 @@
 
 /* Status Display */
 .status-display {
-  padding: var(--spacing-lg);
-  background: var(--bg-secondary);
-  border-radius: var(--border-radius-lg);
-  margin-top: var(--spacing-lg);
-  border: 1px solid var(--border-color);
+  padding: var(--spacing-xl);
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.05), rgba(6, 182, 212, 0.03));
+  border-radius: var(--border-radius-xl);
+  margin-top: var(--spacing-xl);
+  border: 2px solid rgba(16, 185, 129, 0.2);
+  animation: pulse 3s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.2); }
+  50% { box-shadow: 0 0 0 15px rgba(16, 185, 129, 0); }
 }
 
 .status-display h3 {
   margin: 0 0 var(--spacing-md) 0;
   color: var(--success-color);
+  font-size: var(--font-size-xl);
 }
 
 .status-display p {
   color: var(--text-secondary);
-  line-height: 1.6;
+  line-height: 1.8;
+  font-size: var(--font-size-base);
 }
 
 .status-badge {
-  display: inline-block;
-  padding: var(--spacing-xs) var(--spacing-sm);
-  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-xs) var(--spacing-md);
+  border-radius: 20px;
   font-size: var(--font-size-xs);
-  font-weight: 500;
+  font-weight: 600;
   margin-left: var(--spacing-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.status-badge::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  animation: blink 1.5s infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
 }
 
 .status.pending,
 .status-badge.pending {
-  background: var(--warning-light);
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(251, 191, 36, 0.1));
   color: #92400e;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.status-badge.pending::before {
+  background: #f59e0b;
 }
 
 .status.accepted,
 .status-badge.accepted {
-  background: var(--success-light);
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(6, 182, 212, 0.1));
   color: #065f46;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.status-badge.accepted::before {
+  background: var(--success-color);
 }
 
 .status.rejected,
 .status-badge.rejected {
-  background: var(--error-light);
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(248, 113, 113, 0.1));
   color: #991b1b;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.status-badge.rejected::before {
+  background: var(--error-color);
 }
 
 /* Form Styles */
 .project-registration-form {
   background: var(--bg-primary);
-  padding: var(--spacing-xl);
-  border-radius: var(--border-radius-lg);
-  box-shadow: var(--shadow-md);
+  padding: var(--spacing-2xl);
+  border-radius: var(--border-radius-xl);
+  box-shadow: var(--shadow-2xl);
   border: 1px solid var(--border-color);
+  position: relative;
+  overflow: hidden;
+}
+
+.project-registration-form::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: linear-gradient(90deg, var(--accent-color), var(--info-color), var(--success-color));
+  background-size: 200% 100%;
+  animation: gradientFlow 4s infinite;
+}
+
+@keyframes gradientFlow {
+  0% { background-position: 0% center; }
+  50% { background-position: 100% center; }
+  100% { background-position: 0% center; }
 }
 
 .form-group {
-  margin-bottom: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+  animation: fadeInLeft 0.5s ease backwards;
+}
+
+.form-group:nth-child(1) { animation-delay: 0.1s; }
+.form-group:nth-child(2) { animation-delay: 0.2s; }
+.form-group:nth-child(3) { animation-delay: 0.3s; }
+.form-group:nth-child(4) { animation-delay: 0.4s; }
+.form-group:nth-child(5) { animation-delay: 0.5s; }
+
+@keyframes fadeInLeft {
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
 }
 
 .form-group label {
   display: block;
-  margin-bottom: var(--spacing-xs);
-  font-weight: 500;
+  margin-bottom: var(--spacing-sm);
+  font-weight: 600;
   color: var(--text-primary);
   font-size: var(--font-size-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .form-group input,
 .form-group textarea,
 .form-group select {
   width: 100%;
-  padding: var(--spacing-sm) var(--spacing-md);
-  border: 1px solid var(--border-color);
-  border-radius: var(--border-radius);
-  font-size: var(--font-size-sm);
+  padding: var(--spacing-md) var(--spacing-lg);
+  border: 2px solid var(--border-color);
+  border-radius: var(--border-radius-lg);
+  font-size: var(--font-size-base);
   font-family: var(--font-family);
   background: var(--bg-primary);
   color: var(--text-primary);
-  transition: all var(--transition-base);
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .form-group textarea {
   resize: vertical;
-  min-height: 120px;
+  min-height: 140px;
+}
+
+.form-group input:hover,
+.form-group textarea:hover,
+.form-group select:hover {
+  border-color: var(--border-color-hover);
 }
 
 .form-group input:focus,
 .form-group textarea:focus,
 .form-group select:focus {
   outline: none;
-  border-color: var(--primary-color);
-  box-shadow: 0 0 0 3px var(--primary-light);
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 4px var(--accent-light), var(--shadow-md);
+  transform: translateY(-2px);
 }
 
 /* Table Styles */
@@ -126,30 +230,41 @@
   width: 100%;
   border-collapse: collapse;
   background: var(--bg-primary);
-  border-radius: var(--border-radius-lg);
+  border-radius: var(--border-radius-xl);
   overflow: hidden;
-  box-shadow: var(--shadow-sm);
-  margin-top: var(--spacing-md);
+  box-shadow: var(--shadow-lg);
+  margin-top: var(--spacing-lg);
+  animation: scaleIn 0.5s ease;
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
 }
 
 .project-registration th,
 .project-registration td {
-  padding: var(--spacing-md);
+  padding: var(--spacing-lg);
   text-align: left;
   border-bottom: 1px solid var(--border-color);
 }
 
 .project-registration th {
-  background: var(--gray-50);
-  color: var(--text-secondary);
+  background: linear-gradient(135deg, var(--accent-color) 0%, var(--info-color) 100%);
+  color: var(--text-inverse);
   font-weight: 600;
   font-size: var(--font-size-sm);
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 1px;
+}
+
+.project-registration tbody tr {
+  transition: all var(--transition-base);
 }
 
 .project-registration tbody tr:hover {
-  background: var(--gray-50);
+  background: linear-gradient(90deg, var(--accent-light), transparent);
+  transform: scale(1.01);
 }
 
 .project-registration tbody tr:last-child td {
@@ -158,41 +273,70 @@
 
 /* Buttons */
 .submit-button {
-  padding: var(--spacing-md) var(--spacing-xl);
-  background: var(--primary-color);
+  padding: var(--spacing-md) var(--spacing-2xl);
+  background: linear-gradient(135deg, var(--accent-color) 0%, var(--info-color) 100%);
   color: var(--text-inverse);
   border: none;
-  border-radius: var(--border-radius);
+  border-radius: var(--border-radius-lg);
   font-size: var(--font-size-base);
-  font-weight: 500;
+  font-weight: 700;
   cursor: pointer;
   transition: all var(--transition-base);
-  margin-top: var(--spacing-md);
+  margin-top: var(--spacing-lg);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: relative;
+  overflow: hidden;
+}
+
+.submit-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.5s ease;
+}
+
+.submit-button:hover:not(:disabled)::before {
+  left: 100%;
 }
 
 .submit-button:hover:not(:disabled) {
-  background: var(--primary-hover);
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-md);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(99, 102, 241, 0.4);
+}
+
+.submit-button:active:not(:disabled) {
+  transform: translateY(-2px);
 }
 
 .submit-button:disabled {
-  background: var(--gray-400);
+  background: var(--border-color);
   cursor: not-allowed;
   opacity: 0.6;
 }
 
 /* Supervisor Preferences Info */
 .supervisor-preferences-info {
-  background: var(--bg-secondary);
-  padding: var(--spacing-md);
-  border-radius: var(--border-radius);
-  margin-top: var(--spacing-sm);
-  border-left: 4px solid var(--primary-color);
+  background: linear-gradient(135deg, var(--bg-secondary), var(--bg-primary));
+  padding: var(--spacing-lg);
+  border-radius: var(--border-radius-lg);
+  margin-top: var(--spacing-md);
+  border-left: 4px solid var(--accent-color);
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .supervisor-preferences-info p {
   margin: 0;
   color: var(--text-secondary);
   font-size: var(--font-size-sm);
+  line-height: 1.6;
 }
