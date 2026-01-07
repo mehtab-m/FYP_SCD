@@ -109,20 +109,19 @@ const EvaluationDashboard = () => {
       return filePath;
     }
     
-    // Get backend base URL (remove /api suffix if present)
+    // Get backend base URL
     const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || "http://localhost:9090/api";
     const backendBaseUrl = apiBaseUrl.replace(/\/api$/, "");
     
     // Remove leading slash from filePath if present
     const cleanPath = filePath.startsWith("/") ? filePath.slice(1) : filePath;
     
-    // Split the path and encode each segment properly
-    const pathSegments = cleanPath.split("/");
-    const encodedSegments = pathSegments.map(segment => encodeURIComponent(segment));
-    const encodedPath = encodedSegments.join("/");
+    // Use the file serving endpoint with proper encoding
+    // Encode the entire path as a query parameter to avoid URL encoding issues
+    const encodedPath = encodeURIComponent(cleanPath);
     
-    // Construct full URL
-    return `${backendBaseUrl}/${encodedPath}`;
+    // Use the file controller endpoint
+    return `${backendBaseUrl}/api/files?path=${encodedPath}`;
   };
 
   const handleSignOut = () => {
