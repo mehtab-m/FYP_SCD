@@ -77,6 +77,30 @@ const ViewDocuments = ({ supervisorId, groupId }) => {
     });
   };
 
+  const getFileUrl = (filePath) => {
+    if (!filePath) return null;
+    
+    // If filePath already starts with http, return as is
+    if (filePath.startsWith("http://") || filePath.startsWith("https://")) {
+      return filePath;
+    }
+    
+    // Get backend base URL (remove /api suffix if present)
+    const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || "http://localhost:9090/api";
+    const backendBaseUrl = apiBaseUrl.replace(/\/api$/, "");
+    
+    // Remove leading slash from filePath if present
+    const cleanPath = filePath.startsWith("/") ? filePath.slice(1) : filePath;
+    
+    // Split the path and encode each segment properly
+    const pathSegments = cleanPath.split("/");
+    const encodedSegments = pathSegments.map(segment => encodeURIComponent(segment));
+    const encodedPath = encodedSegments.join("/");
+    
+    // Construct full URL
+    return `${backendBaseUrl}/${encodedPath}`;
+  };
+
   if (!groupId) {
     return (
       <div className="view-documents-page">
@@ -171,7 +195,7 @@ const ViewDocuments = ({ supervisorId, groupId }) => {
                 <td>
                   {doc.filePath ? (
                     <a
-                      href={doc.filePath}
+                      href={getFileUrl(doc.filePath)}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="file-link"

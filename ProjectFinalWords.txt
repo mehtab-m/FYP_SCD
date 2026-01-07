@@ -1,0 +1,975 @@
+================================================================================
+                    FYP_SCD FRONTEND PROJECT - COMPLETE GUIDE
+                    ProjectSphere - Final Year Project Management System
+================================================================================
+
+TABLE OF CONTENTS:
+1. Project Overview
+2. Technology Stack
+3. Project Structure
+4. Authentication & Routing Flow
+5. User Roles & Dashboards
+6. Complete API Documentation
+7. Component Architecture
+8. Data Flow & State Management
+9. Key Features & Workflows
+10. Environment Configuration
+11. Important Notes for New Developers
+
+================================================================================
+1. PROJECT OVERVIEW
+================================================================================
+
+Project Name: ProjectSphere
+Purpose: A comprehensive Final Year Project (FYP) management system for universities
+Frontend Framework: React 19.2.0 with Vite 7.2.4
+Backend API Base URL: http://localhost:9090/api (configurable via VITE_API_BASE_URL)
+
+The system manages:
+- Student group formation and project registration
+- Supervisor assignment and document evaluation
+- Committee management (FYP Committee & Evaluation Committee)
+- Document submissions and deadline management
+- Marks/grades assignment and result publication
+- Administrative user management
+
+================================================================================
+2. TECHNOLOGY STACK
+================================================================================
+
+Core Dependencies:
+- React 19.2.0
+- React DOM 19.2.0
+- React Router DOM 7.11.0 (for routing)
+- Axios 1.13.2 (for API calls)
+- React Icons 5.5.0 (for icons)
+
+Build Tools:
+- Vite 7.2.4 (build tool and dev server)
+- ESLint (code linting)
+
+================================================================================
+3. PROJECT STRUCTURE
+================================================================================
+
+FYP_SCD/
+├── src/
+│   ├── api/
+│   │   └── axios.js                    # Axios instance with base URL configuration
+│   ├── assets/
+│   │   └── icons/
+│   │       └── logo.png                # Project logo
+│   ├── components/
+│   │   ├── ConfirmationModal/          # Reusable confirmation dialog
+│   │   ├── InputModal/                 # Reusable input dialog
+│   │   └── Notification/                # Toast notification component
+│   ├── hooks/
+│   │   └── useNotification.jsx         # Custom hook for notifications
+│   ├── pages/
+│   │   ├── admin/                      # Super Admin pages
+│   │   │   ├── SuperAdminDashboard.jsx
+│   │   │   ├── CreateStudent/          # Create student accounts
+│   │   │   ├── CreateMember/           # Create supervisor accounts
+│   │   │   ├── CreateProfessor/        # Create professor accounts
+│   │   │   ├── CreateFYPComittee/      # Manage FYP Committee
+│   │   │   ├── CreateEvaluationComittee/ # Manage Evaluation Committee
+│   │   │   └── DocumentManagement/     # Manage document types
+│   │   ├── auth/
+│   │   │   └── Login.jsx               # Login page for all roles
+│   │   ├── committee/
+│   │   │   ├── Evaluation/
+│   │   │   │   └── EvaluationDashboard.jsx # Evaluation Committee dashboard
+│   │   │   └── FYP/
+│   │   │       ├── FYPCommitteeDashboard.jsx
+│   │   │       ├── ProjectRegistrations/    # Review/approve projects
+│   │   │       ├── SetDeadline/             # Set document deadlines
+│   │   │       ├── MonitorProgress/        # Track student/supervisor progress
+│   │   │       └── ReleaseResults/         # Assign and publish grades
+│   │   ├── student/
+│   │   │   ├── StudentDashboard.jsx
+│   │   │   ├── GroupManagement/         # Create/join groups
+│   │   │   ├── ProjectRegistration/    # Register FYP project
+│   │   │   ├── Submissions/            # Submit documents
+│   │   │   ├── ViewMarks/              # View assigned marks
+│   │   │   └── Notifications/           # View notifications
+│   │   └── supervisor/
+│   │       ├── SupervisorDashboard.jsx
+│   │       ├── ViewGroups/             # View assigned groups
+│   │       ├── ViewDocuments/         # Review/evaluate documents
+│   │       └── ChangePassword/        # Change password
+│   ├── styles/
+│   │   └── theme.css                   # Global theme styles
+│   ├── App.jsx                         # Main app component with routing
+│   ├── App.css                         # Global app styles
+│   ├── main.jsx                        # React entry point
+│   └── index.css                       # Base styles
+├── package.json                        # Dependencies and scripts
+├── vite.config.js                      # Vite configuration
+└── index.html                          # HTML template
+
+================================================================================
+4. AUTHENTICATION & ROUTING FLOW
+================================================================================
+
+AUTHENTICATION:
+- Login endpoint: POST /api/auth/login
+- Request body: { email, password, role }
+- Response: { success: boolean, user: { id, name, email, role, ... } }
+- User data stored in localStorage as JSON string under key 'user'
+- Super Admin has hardcoded credentials (bypasses API):
+  - Email: fypscd@gmail.com
+  - Password: fypscd@125
+  - Role: Admin (converted to SuperAdmin internally)
+
+ROUTING STRUCTURE (App.jsx):
+- "/" → Login page
+- "/dashboard" → Role-based dashboard (Student/Supervisor/Evaluation Committee/FYP Committee)
+- "/superadmin" → Super Admin Dashboard
+
+ROLE-BASED DASHBOARD ROUTING:
+The getDashboard() function in App.jsx routes based on user.role:
+- "Student" → StudentDashboard
+- "Supervisor" → SupervisorDashboard
+- "Evaluation Committee" → EvaluationDashboard
+- "FYP Committee" → FYPCommitteeDashboard
+- Default → Redirect to "/"
+
+================================================================================
+5. USER ROLES & DASHBOARDS
+================================================================================
+
+5.1 STUDENT ROLE
+Dashboard: StudentDashboard.jsx
+Features:
+- Group Management: Create groups, send invitations, finalize groups (4 members)
+- Project Registration: Register FYP project with supervisor preferences
+- Submissions: Submit documents before deadlines (only within 6 days of deadline)
+- View Marks: View marks assigned by supervisor and committee
+- Notifications: View group invitations and project approval notifications
+
+5.2 SUPERVISOR ROLE
+Dashboard: SupervisorDashboard.jsx
+Features:
+- View Groups: View all groups assigned as supervisor
+- View Documents: Review, accept/reject, and assign marks to submitted documents
+- Change Password: Update account password
+
+5.3 FYP COMMITTEE ROLE
+Dashboard: FYPCommitteeDashboard.jsx
+Features:
+- Project Registrations: Accept/reject/approve project registrations, assign supervisors
+- Set Deadlines: Set submission deadlines for document types
+- Monitor Progress: Track student and supervisor activity
+- Release Results: Assign grades to all groups and publish results
+
+5.4 EVALUATION COMMITTEE ROLE
+Dashboard: EvaluationDashboard.jsx
+Features:
+- All Groups: View all approved projects
+- View Documents: Grade documents submitted by groups
+
+5.5 SUPER ADMIN ROLE
+Dashboard: SuperAdminDashboard.jsx
+Features:
+- Manage Student: Create student accounts
+- Manage Supervisor: Create supervisor accounts
+- Manage Professor: Create professor accounts
+- FYP Committee: Add/remove professors to FYP Committee (max 4)
+- Evaluation Committee: Add/remove professors to Evaluation Committee (max 4)
+- Document Management: Create/delete document types with max marks
+
+================================================================================
+6. COMPLETE API DOCUMENTATION
+================================================================================
+
+BASE URL: http://localhost:9090/api (or from VITE_API_BASE_URL env variable)
+All requests use the axios instance from src/api/axios.js
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+AUTHENTICATION APIs
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+POST /auth/login
+Description: Authenticate user and return user data
+Request Body:
+  {
+    email: string,
+    password: string,
+    role: "Student" | "Supervisor" | "Evaluation Committee" | "FYP Committee" | "Admin"
+  }
+Response:
+  {
+    success: boolean,
+    user: {
+      id: number,
+      userId: number,
+      name: string,
+      email: string,
+      role: string,
+      ...
+    }
+  }
+Used in: Login.jsx
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STUDENT APIs
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+GET /student/groups/available
+Description: Get list of all available students for group formation
+Response: Array<{ userId, name, email, rollNo, semester, ... }>
+Used in: GroupManagement.jsx
+
+GET /student/groups/sent-invitations?leaderId={studentId}
+Description: Get invitations sent by current student (as leader)
+Response: Array<{ studentId, status: "pending" | "accepted" | "rejected", ... }>
+Used in: GroupManagement.jsx
+
+GET /student/groups/accepted?leaderId={studentId}
+Description: Get students who accepted invitations from current leader
+Response: Array<{ userId, name, email, ... }>
+Used in: GroupManagement.jsx
+
+GET /student/groups/is-finalized?leaderId={studentId}
+Description: Check if group is finalized
+Response: { finalized: boolean }
+Used in: GroupManagement.jsx
+
+POST /student/groups/invite/{studentId}?leaderId={currentUserId}
+Description: Send group invitation to another student
+Request: None (studentId in path, leaderId in query)
+Response: Success/error message
+Used in: GroupManagement.jsx
+
+POST /student/groups/finalize?leaderId={currentUserId}
+Description: Finalize group with selected members
+Request Body: { selectedStudentIds: number[] }
+Response: Success/error message
+Used in: GroupManagement.jsx
+
+GET /student/groups/members?studentId={studentId}
+Description: Get all members of student's group
+Response: Array<{ id, name, email, semester, isLeader, ... }>
+Used in: StudentDashboard.jsx, ProjectRegistration.jsx
+
+GET /student/groups/invitations-with-leader?studentId={studentId}
+Description: Get all invitations and notifications for student
+Response: Array<{ invitationId, type, status, leader, groupId, projectId, title, supervisor, ... }>
+Used in: Notifications.jsx
+
+POST /student/groups/invitations/{invitationId}/{action}
+Description: Accept or reject group invitation
+Path params: invitationId, action ("accept" | "reject")
+Response: Success/error message
+Used in: Notifications.jsx
+
+GET /student/projects/supervisors
+Description: Get list of all available supervisors
+Response: Array<{ userId, name, email, ... }>
+Used in: ProjectRegistration.jsx
+
+GET /student/projects/details?studentId={studentId}
+Description: Get project registration details for student's group
+Response: {
+  exists: boolean,
+  title: string,
+  abstractText: string,
+  status: "pending" | "accepted" | "approved" | "rejected",
+  supervisorPreferences: Array<{ preferenceOrder, supervisorName, supervisorEmail }>,
+  assignedSupervisor: { name, email },
+  groupMembers: Array<{ name, email, isLeader }>
+}
+Used in: StudentDashboard.jsx, ProjectRegistration.jsx
+
+POST /student/projects/register?studentId={studentId}
+Description: Register new project for student's group
+Request Body: {
+  title: string,
+  abstractText: string,
+  supervisorPreferences: number[] (array of supervisor userIds in preference order)
+}
+Response: Success/error message
+Used in: ProjectRegistration.jsx
+
+GET /student/documents?userId={userId}
+Description: Get all documents that student needs to submit
+Response: Array<{
+  documentId: number,
+  documentName: string,
+  deadline: string (ISO date),
+  deadline_time: string,
+  status: "pending" | "approved" | "rejected",
+  submitted: boolean,
+  submittedAt: string
+}>
+Used in: Submissions.jsx
+
+POST /student/submissions/{documentId}
+Description: Submit a document file
+Request: FormData with { file: File, userId: number }
+Headers: { "Content-Type": "multipart/form-data" }
+Response: Success/error message
+Used in: Submissions.jsx
+
+GET /student/marks?userId={userId}
+Description: Get marks breakdown for student's group
+Response: {
+  groupName: string,
+  projectTitle: string,
+  totalMarks: number,
+  maxMarks: number,
+  grade: string | null,
+  gradePublished: boolean,
+  documentMarks: Array<{
+    documentId: number,
+    documentName: string,
+    supervisor: number,
+    committee: number,
+    total: number,
+    maxSupervisor: number,
+    maxCommittee: number,
+    maxTotal: number
+  }>
+}
+Used in: ViewMarks.jsx
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SUPERVISOR APIs
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+GET /supervisor/groups?supervisorId={supervisorId}
+Description: Get all groups assigned to supervisor
+Response: Array<{
+  groupId: number,
+  projectTitle: string,
+  projectStatus: string,
+  members: Array<{ id, name, email, semester, isLeader }>
+}>
+Used in: ViewGroups.jsx
+
+GET /supervisor/documents?supervisorId={supervisorId}&groupId={groupId}
+Description: Get all documents submitted by a specific group
+Response: Array<{
+  submissionId: number,
+  documentName: string,
+  version: number,
+  submittedAt: string,
+  status: "pending" | "approved" | "rejected",
+  isLate: boolean,
+  marksAwarded: number | null,
+  maxMarks: number,
+  filePath: string
+}>
+Used in: ViewDocuments.jsx
+
+POST /supervisor/submission-status
+Description: Accept or reject a document submission
+Request Body: {
+  supervisorId: number,
+  submissionId: number,
+  status: "approved" | "rejected"
+}
+Response: Success/error message
+Used in: ViewDocuments.jsx
+
+POST /supervisor/assign-marks
+Description: Assign marks to a document submission
+Request Body: {
+  supervisorId: number,
+  submissionId: number,
+  marks: number (0-100)
+}
+Response: Success/error message
+Used in: ViewDocuments.jsx
+
+POST /supervisor/change-password
+Description: Change supervisor password
+Request Body: {
+  supervisorId: number,
+  oldPassword: string,
+  newPassword: string
+}
+Response: { success: boolean, message: string }
+Used in: ChangePassword.jsx
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+FYP COMMITTEE APIs (accessed via /admin endpoints)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+GET /admin/projects/registrations
+Description: Get all project registrations for review
+Response: Array<{
+  id: number,
+  title: string,
+  abstractText: string,
+  status: "pending" | "accepted" | "approved" | "rejected",
+  groupMembers: Array<{ name, email, semester, isLeader }>,
+  supervisorPreferences: Array<{ preferenceOrder, supervisorName, supervisorEmail }>,
+  assignedSupervisor: { name, email } | null,
+  rejectionReason: string | null
+}>
+Used in: ProjectRegistrations.jsx
+
+GET /admin/supervisors/available
+Description: Get all available supervisors for assignment
+Response: Array<{ id, name, email, ... }>
+Used in: ProjectRegistrations.jsx
+
+POST /admin/projects/accept
+Description: Accept a project registration (first step)
+Request Body: { projectId: number }
+Response: Success/error message
+Used in: ProjectRegistrations.jsx
+
+POST /admin/projects/reject
+Description: Reject a project registration
+Request Body: { projectId: number, reason: string }
+Response: Success/error message
+Used in: ProjectRegistrations.jsx
+
+POST /admin/projects/assign-supervisor
+Description: Assign supervisor to an accepted project
+Request Body: {
+  projectId: number,
+  supervisorEmail: string,
+  committeeId: number (current FYP committee member ID)
+}
+Response: Success/error message
+Used in: ProjectRegistrations.jsx
+
+POST /admin/projects/approve
+Description: Approve project and finalize supervisor assignment
+Request Body: { projectId: number }
+Response: Success/error message
+Used in: ProjectRegistrations.jsx
+
+GET /admin/documents
+Description: Get all document types
+Response: Array<{
+  documentId: number,
+  documentName: string,
+  deadline: string | null,
+  deadline_time: string | null,
+  committeeMaxMarks: number,
+  supervisorMaxMarks: number
+}>
+Used in: SetDeadline.jsx, DocumentManagement.jsx
+
+POST /admin/documents/{documentId}/set-deadline
+Description: Set deadline for a document type
+Request Body: {
+  deadlineDate: string (YYYY-MM-DD),
+  deadlineTime: string (HH:mm)
+}
+Response: Success/error message
+Used in: SetDeadline.jsx
+
+GET /admin/progress/all
+Description: Get progress data for all users
+Response: Array<{
+  type: "student" | "supervisor",
+  projectTitle: string,
+  groupName: string,
+  supervisorName: string,
+  status: string,
+  lastActivity: string,
+  progressPercentage: number,
+  submittedDocuments: number,
+  totalDocuments: number,
+  milestones: Array<{ name, completed, status }>,
+  ...
+}>
+Used in: MonitorProgress.jsx
+
+GET /admin/progress/students
+Description: Get progress data for students only
+Response: Same as /admin/progress/all (filtered)
+Used in: MonitorProgress.jsx
+
+GET /admin/progress/supervisors
+Description: Get progress data for supervisors only
+Response: Array<{
+  type: "supervisor",
+  supervisorName: string,
+  supervisorEmail: string,
+  projectsCount: number,
+  lastActivity: string,
+  responseRate: number,
+  evaluatedSubmissions: number,
+  totalSubmissionsToEvaluate: number
+}>
+Used in: MonitorProgress.jsx
+
+GET /admin/results
+Description: Get results for all groups
+Response: Array<{
+  id: number,
+  groupId: number,
+  groupName: string,
+  projectTitle: string,
+  supervisorName: string,
+  totalMarks: number,
+  maxMarks: number,
+  grade: string | null,
+  published: boolean,
+  documentMarks: Array<{
+    documentName: string,
+    supervisorMarks: number,
+    committeeMarks: number,
+    totalMarks: number,
+    maxMarks: number,
+    version: number
+  }>
+}>
+Used in: ReleaseResults.jsx
+
+POST /admin/results/publish
+Description: Assign and publish grades for all groups
+Request Body: {
+  grade: string (A-G),
+  marks: number (threshold),
+  assignedBy: number (committee member ID)
+}
+Response: { success: boolean, message: string }
+Used in: ReleaseResults.jsx
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EVALUATION COMMITTEE APIs
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+GET /evaluation/groups
+Description: Get all approved groups for evaluation
+Response: Array<{
+  groupId: number,
+  projectTitle: string,
+  projectStatus: string,
+  members: Array<{ id, name, email, semester, isLeader }>
+}>
+Used in: EvaluationDashboard.jsx
+
+GET /evaluation/documents?committeeId={committeeId}&groupId={groupId}
+Description: Get documents submitted by a group for evaluation
+Response: Array<{
+  submissionId: number,
+  documentName: string,
+  version: number,
+  submittedAt: string,
+  status: string,
+  isLate: boolean,
+  marksAwarded: number | null,
+  maxMarks: number,
+  filePath: string
+}>
+Used in: EvaluationDashboard.jsx
+
+POST /evaluation/assign-marks
+Description: Assign marks to a document (committee evaluation)
+Request Body: {
+  committeeId: number,
+  submissionId: number,
+  marks: number
+}
+Response: Success/error message
+Used in: EvaluationDashboard.jsx
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SUPER ADMIN APIs
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+POST /admin/users/create
+Description: Create a new user (student/supervisor/professor)
+Request Body: {
+  name: string,
+  email: string,
+  password: string (default: "Temp@123"),
+  roles: string[] (["STUDENT"] | ["SUPERVISOR"] | ["PROFESSOR"]),
+  semester?: number (for students),
+  rollNo?: string (for students)
+}
+Response: Success/error message
+Used in: CreateStudent.jsx, CreateMember.jsx, CreateProfessor.jsx
+
+GET /admin/fyp-committee/available-professors
+Description: Get professors available for FYP Committee
+Response: Array<{ userId, name, email, ... }>
+Used in: ManageFYPCommittee.jsx
+
+GET /admin/fyp-committee
+Description: Get current FYP Committee members
+Response: Array<{ userId, name, email, ... }>
+Used in: ManageFYPCommittee.jsx
+
+POST /admin/fyp-committee
+Description: Add professor to FYP Committee
+Request Body: { professorId: number }
+Response: Success/error message
+Used in: ManageFYPCommittee.jsx
+
+DELETE /admin/fyp-committee/{professorId}
+Description: Remove professor from FYP Committee
+Response: Success/error message
+Used in: ManageFYPCommittee.jsx
+
+GET /admin/evaluation-committee/available-professors
+Description: Get professors available for Evaluation Committee
+Response: Array<{ userId, name, email, ... }>
+Used in: ManageEvaluationCommittee.jsx
+
+GET /admin/evaluation-committee/members
+Description: Get current Evaluation Committee members
+Response: Array<{ userId, name, email, ... }>
+Used in: ManageEvaluationCommittee.jsx
+
+POST /admin/evaluation-committee
+Description: Add professor to Evaluation Committee
+Request Body: { professorId: number }
+Response: Success/error message
+Used in: ManageEvaluationCommittee.jsx
+
+DELETE /admin/evaluation-committee/{professorId}
+Description: Remove professor from Evaluation Committee
+Response: Success/error message
+Used in: ManageEvaluationCommittee.jsx
+
+POST /admin/documents
+Description: Create a new document type
+Request Body: {
+  name: string,
+  committeeMaxMarks: number,
+  supervisorMaxMarks: number
+}
+Response: { documentId, documentName, ... }
+Used in: DocumentManagement.jsx
+
+DELETE /admin/documents/{documentId}
+Description: Delete a document type
+Response: Success/error message
+Used in: DocumentManagement.jsx
+
+================================================================================
+7. COMPONENT ARCHITECTURE
+================================================================================
+
+7.1 SHARED COMPONENTS
+
+ConfirmationModal (components/ConfirmationModal/ConfirmationModal.jsx)
+- Purpose: Reusable confirmation dialog
+- Props:
+  - isOpen: boolean
+  - onClose: function
+  - onConfirm: function
+  - title: string
+  - message: string
+  - confirmText: string (default: "Confirm")
+  - cancelText: string (default: "Cancel")
+  - type: "warning" | "danger" (default: "warning")
+- Used in: ProjectRegistrations.jsx
+
+InputModal (components/InputModal/InputModal.jsx)
+- Purpose: Reusable input dialog with textarea
+- Props:
+  - isOpen: boolean
+  - onClose: function
+  - onConfirm: function (receives input value)
+  - title: string
+  - message: string
+  - placeholder: string
+  - confirmText: string
+  - cancelText: string
+  - required: boolean (default: true)
+- Used in: ProjectRegistrations.jsx
+
+Notification (components/Notification/Notification.jsx)
+- Purpose: Toast notification component
+- Used via: useNotification hook
+
+7.2 CUSTOM HOOKS
+
+useNotification (hooks/useNotification.jsx)
+- Purpose: Manage notification state and display
+- Returns:
+  - showSuccess(message)
+  - showError(message)
+  - showWarning(message)
+  - showInfo(message)
+  - NotificationComponent (JSX to render)
+- Used in: ProjectRegistrations.jsx, ReleaseResults.jsx
+
+7.3 API CONFIGURATION
+
+axios.js (api/axios.js)
+- Creates axios instance with baseURL from environment variable
+- Base URL: VITE_API_BASE_URL || "http://localhost:9090/api"
+- All API calls use this instance
+
+================================================================================
+8. DATA FLOW & STATE MANAGEMENT
+================================================================================
+
+8.1 AUTHENTICATION FLOW
+
+1. User enters credentials in Login.jsx
+2. POST /auth/login with email, password, role
+3. On success, user data stored in localStorage as JSON
+4. App.jsx reads user from localStorage to determine dashboard
+5. User data passed to dashboards via localStorage (not props)
+
+8.2 USER ID RETRIEVAL
+
+All components retrieve current user ID from localStorage:
+```javascript
+const userStr = localStorage.getItem('user') || sessionStorage.getItem('user');
+const user = JSON.parse(userStr);
+const currentUserId = user.id || user.userId;
+```
+
+8.3 STATE MANAGEMENT
+
+- No global state management library (Redux/Context)
+- Each component manages its own state with useState
+- Data fetched on component mount via useEffect
+- localStorage used for user persistence
+- No session management tokens (stateless API)
+
+8.4 DATA FLOW EXAMPLES
+
+Student Group Formation:
+1. GroupManagement fetches available students
+2. Leader sends invitations via POST /student/groups/invite/{studentId}
+3. Invited students see notifications
+4. Students accept/reject via POST /student/groups/invitations/{id}/{action}
+5. Leader finalizes group via POST /student/groups/finalize
+
+Project Registration:
+1. Student fills form in ProjectRegistration.jsx
+2. POST /student/projects/register with title, abstract, supervisor preferences
+3. FYP Committee reviews in ProjectRegistrations.jsx
+4. Committee accepts/rejects/approves via respective endpoints
+5. Supervisor assigned via POST /admin/projects/assign-supervisor
+6. Project approved via POST /admin/projects/approve
+
+Document Submission:
+1. FYP Committee sets deadlines via POST /admin/documents/{id}/set-deadline
+2. Students see documents in Submissions.jsx
+3. Students can submit only within 6 days of deadline
+4. POST /student/submissions/{documentId} with FormData
+5. Supervisor reviews in ViewDocuments.jsx
+6. Supervisor accepts/rejects and assigns marks
+7. Evaluation Committee also grades documents
+
+================================================================================
+9. KEY FEATURES & WORKFLOWS
+================================================================================
+
+9.1 GROUP FORMATION WORKFLOW
+
+1. Student (leader) views available students
+2. Leader sends invitations (max 3 invitations at a time)
+3. Invited students receive notifications
+4. Students accept/reject invitations
+5. Leader selects 3 accepted students
+6. Leader finalizes group (total 4 members including leader)
+7. Group is locked and cannot be modified
+
+9.2 PROJECT REGISTRATION WORKFLOW
+
+1. Group must have exactly 4 members
+2. Leader registers project with:
+   - Project title
+   - Abstract
+   - 3 supervisor preferences (1st, 2nd, 3rd)
+3. Status: "pending"
+4. FYP Committee reviews:
+   - Accept → status: "accepted"
+   - Reject → status: "rejected" (with reason)
+5. If accepted, FYP Committee assigns supervisor
+6. FYP Committee approves → status: "approved"
+7. Supervisor is notified and assigned to group
+
+9.3 DOCUMENT SUBMISSION WORKFLOW
+
+1. Super Admin creates document types via DocumentManagement
+2. FYP Committee sets deadlines for each document
+3. Students see documents in Submissions page
+4. Students can submit only within 6 days before deadline
+5. Submission creates new version (if resubmitted)
+6. Supervisor reviews and:
+   - Accepts/rejects submission
+   - Assigns marks (0 to maxMarks)
+7. Evaluation Committee also grades same documents
+8. Final marks = Supervisor marks + Committee marks
+
+9.4 GRADING WORKFLOW
+
+1. Supervisor assigns marks to each document
+2. Evaluation Committee assigns marks to each document
+3. System calculates total marks per document
+4. System calculates overall total marks
+5. FYP Committee views results in ReleaseResults
+6. FYP Committee assigns grades based on:
+   - Base grade (A-G)
+   - Marks threshold
+   - Grade decreases by one for every 10 marks below threshold
+7. Grades published to students
+
+9.5 NOTIFICATION SYSTEM
+
+Notifications include:
+- Group invitations (accept/reject)
+- Group creation confirmation
+- Project approval notifications
+- Supervisor assignment notifications
+
+================================================================================
+10. ENVIRONMENT CONFIGURATION
+================================================================================
+
+Environment Variables:
+- VITE_API_BASE_URL: Backend API base URL (default: "http://localhost:9090/api")
+
+To set environment variable:
+- Create .env file in project root
+- Add: VITE_API_BASE_URL=http://your-backend-url/api
+
+Build Commands:
+- npm run dev: Start development server
+- npm run build: Build for production
+- npm run preview: Preview production build
+- npm run lint: Run ESLint
+
+================================================================================
+11. IMPORTANT NOTES FOR NEW DEVELOPERS
+================================================================================
+
+11.1 AUTHENTICATION
+- User data is stored in localStorage, not in React state
+- Always check localStorage for user data in components
+- Super Admin bypasses API authentication (hardcoded credentials)
+- No JWT tokens or session management
+
+11.2 API CALLS
+- All API calls use the axios instance from src/api/axios.js
+- Base URL is configurable via environment variable
+- Error handling is done in each component (try-catch)
+- Most APIs return success/error messages
+
+11.3 USER ID HANDLING
+- Backend may return either "id" or "userId" field
+- Always use: user.id || user.userId
+- Pass user ID as query parameter or in request body
+
+11.4 FILE UPLOADS
+- Document submissions use FormData
+- Content-Type header must be "multipart/form-data"
+- File is sent as "file" field in FormData
+- User ID is also included in FormData
+
+11.5 DATE HANDLING
+- Deadlines are stored as ISO date strings
+- Frontend displays dates using toLocaleDateString() or toLocaleString()
+- Time is stored separately as "deadline_time" or "deadlineTime"
+
+11.6 STATUS VALUES
+- Project status: "pending" | "accepted" | "approved" | "rejected"
+- Submission status: "pending" | "approved" | "rejected"
+- Invitation status: "pending" | "accepted" | "rejected"
+
+11.7 COMMITTEE LIMITATIONS
+- FYP Committee: Maximum 4 members
+- Evaluation Committee: Maximum 4 members
+- Committee ID is hardcoded in some places (Evaluation Committee ID = 2)
+
+11.8 GROUP CONSTRAINTS
+- Groups must have exactly 4 members
+- Only group leader can send invitations
+- Leader can send max 3 invitations at a time
+- Group can only be finalized once
+
+11.9 DOCUMENT SUBMISSION RULES
+- Students can only submit within 6 days before deadline
+- Each resubmission creates a new version
+- Late submissions are marked with isLate flag
+
+11.10 GRADING SYSTEM
+- Each document has maxMarks (supervisorMaxMarks + committeeMaxMarks)
+- Supervisor assigns marks (0 to supervisorMaxMarks)
+- Committee assigns marks (0 to committeeMaxMarks)
+- Total marks = supervisor marks + committee marks
+- Grades assigned based on threshold system
+
+11.11 COMMON PATTERNS
+
+Loading States:
+```javascript
+const [loading, setLoading] = useState(false);
+// In async function:
+setLoading(true);
+try { ... } finally { setLoading(false); }
+```
+
+Error Handling:
+```javascript
+try {
+  await api.post(...);
+  // Success message
+} catch (error) {
+  console.error("Error:", error);
+  alert(error.response?.data?.message || "Failed");
+}
+```
+
+Fetching Data:
+```javascript
+useEffect(() => {
+  if (currentUserId) {
+    fetchData();
+  }
+}, [currentUserId]);
+```
+
+11.12 STYLING
+- Each component has its own CSS file
+- Global styles in App.css and index.css
+- Theme styles in styles/theme.css
+- No CSS framework (pure CSS)
+
+11.13 ROUTING
+- React Router DOM handles routing
+- No protected routes (authentication check in App.jsx)
+- Navigation via useNavigate() hook
+
+11.14 MODAL PATTERNS
+- Modals use overlay pattern (click outside to close)
+- stopPropagation() prevents closing when clicking inside modal
+- State management for modal visibility
+
+================================================================================
+12. COMMON ISSUES & SOLUTIONS
+================================================================================
+
+Issue: User data not found
+Solution: Check localStorage.getItem('user') and parse JSON
+
+Issue: API calls failing
+Solution: Check VITE_API_BASE_URL environment variable and backend server
+
+Issue: File upload not working
+Solution: Ensure FormData is used and Content-Type header is set correctly
+
+Issue: Dates not displaying correctly
+Solution: Parse date strings with new Date() before formatting
+
+Issue: Component not updating after API call
+Solution: Call fetch function again after successful API operation
+
+================================================================================
+END OF DOCUMENTATION
+================================================================================
+
+This document provides a complete overview of the FYP_SCD frontend project.
+For backend API details, refer to the backend documentation.
+For deployment instructions, refer to the deployment guide.
+
+Last Updated: Based on current codebase analysis
+Version: 1.0
+
