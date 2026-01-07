@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import "./App.css";
-import Login from "./pages/auth/Login";
+import LandingPage from "./pages/auth/LandingPage";
 import StudentDashboard from "./pages/student/StudentDashboard";
 import SupervisorDashboard from "./pages/supervisor/SupervisorDashboard";
 import EvaluationDashboard from "./pages/committee/Evaluation/EvaluationDashboard";
@@ -31,7 +31,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Login setUser={setUser} />} />
+        <Route path="/" element={<LandingPage setUser={setUser} />} />
         <Route path="/dashboard" element={getDashboard()} />
         <Route path="/superadmin" element={<SuperAdminDashboard />} />
 
