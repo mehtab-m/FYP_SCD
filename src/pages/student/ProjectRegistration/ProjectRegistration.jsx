@@ -137,28 +137,22 @@ const ProjectRegistration = () => {
     return (
       <div className="project-registration">
         <h2>Project Registration</h2>
-        <div style={{ padding: "20px", backgroundColor: "#f8f9fa", borderRadius: "8px", marginTop: "20px" }}>
-          <h3 style={{ color: "#155724", margin: "0 0 15px 0" }}>✓ Project Already Registered</h3>
+        <div className="project-details-box">
+          <h3>✓ Project Already Registered</h3>
           
           <div style={{ marginBottom: "20px" }}>
             <h4>Project Title:</h4>
-            <p style={{ fontSize: "18px", fontWeight: "bold" }}>{projectDetails.title}</p>
+            <p className="project-title">{projectDetails.title}</p>
           </div>
 
           <div style={{ marginBottom: "20px" }}>
             <h4>Abstract:</h4>
-            <p style={{ whiteSpace: "pre-wrap" }}>{projectDetails.abstractText}</p>
+            <p className="abstract-text">{projectDetails.abstractText}</p>
           </div>
 
           <div style={{ marginBottom: "20px" }}>
             <h4>Status:</h4>
-            <span style={{ 
-              padding: "5px 15px", 
-              borderRadius: "5px",
-              backgroundColor: projectDetails.status === "approved" ? "#d4edda" : "#fff3cd",
-              color: projectDetails.status === "approved" ? "#155724" : "#856404",
-              fontWeight: "bold"
-            }}>
+            <span className={`status-badge-inline ${projectDetails.status === "approved" ? "approved" : "pending"}`}>
               {projectDetails.status.charAt(0).toUpperCase() + projectDetails.status.slice(1)}
             </span>
           </div>
@@ -166,11 +160,11 @@ const ProjectRegistration = () => {
           {projectDetails.supervisorPreferences && projectDetails.supervisorPreferences.length > 0 && (
             <div style={{ marginBottom: "20px" }}>
               <h4>Supervisor Preferences:</h4>
-              <ol>
+              <ol className="preferences-list">
                 {projectDetails.supervisorPreferences
                   .sort((a, b) => a.preferenceOrder - b.preferenceOrder)
                   .map((pref, idx) => (
-                    <li key={idx} style={{ marginBottom: "10px" }}>
+                    <li key={idx}>
                       <strong>{pref.preferenceOrder === 1 ? "1st" : pref.preferenceOrder === 2 ? "2nd" : "3rd"} Preference:</strong> {pref.supervisorName} ({pref.supervisorEmail})
                     </li>
                   ))}
@@ -179,9 +173,9 @@ const ProjectRegistration = () => {
           )}
 
           {projectDetails.assignedSupervisor && (
-            <div style={{ marginBottom: "20px", padding: "15px", backgroundColor: "#d4edda", borderRadius: "5px" }}>
-              <h4 style={{ margin: "0 0 10px 0" }}>Assigned Supervisor:</h4>
-              <p style={{ margin: 0, fontWeight: "bold" }}>
+            <div className="assigned-supervisor-box">
+              <h4>Assigned Supervisor:</h4>
+              <p>
                 {projectDetails.assignedSupervisor.name} ({projectDetails.assignedSupervisor.email})
               </p>
             </div>
@@ -190,7 +184,7 @@ const ProjectRegistration = () => {
           {projectDetails.groupMembers && projectDetails.groupMembers.length > 0 && (
             <div style={{ marginTop: "20px" }}>
               <h4>Group Members:</h4>
-              <ul>
+              <ul className="group-members-list">
                 {projectDetails.groupMembers.map((member, idx) => (
                   <li key={idx}>
                     {member.name} {member.isLeader && "👑 (Leader)"} - {member.email}
@@ -209,11 +203,11 @@ const ProjectRegistration = () => {
     return (
       <div className="project-registration">
         <h2>Project Registration</h2>
-        <div style={{ padding: "20px", backgroundColor: "#fff3cd", borderRadius: "8px", marginTop: "20px" }}>
-          <p style={{ margin: 0, color: "#856404" }}>
+        <div className="warning-message-box">
+          <p>
             Your group must have exactly 4 members to register a project. Current members: {groupMembers.length}
           </p>
-          <p style={{ margin: "10px 0 0 0", color: "#856404" }}>
+          <p>
             Please go to <strong>Group Management</strong> to finalize your group with 4 members.
           </p>
         </div>
@@ -227,16 +221,16 @@ const ProjectRegistration = () => {
       <h2>Project Registration</h2>
       
       {groupMembers.length === 0 ? (
-        <div style={{ padding: "20px", backgroundColor: "#fff3cd", borderRadius: "8px", marginTop: "20px" }}>
-          <p style={{ margin: 0, color: "#856404" }}>
+        <div className="warning-message-box">
+          <p>
             You are not part of any group yet. Please finalize your group first in <strong>Group Management</strong>.
           </p>
         </div>
       ) : (
         <>
-          <div style={{ marginBottom: "20px", padding: "15px", backgroundColor: "#e7f3ff", borderRadius: "5px" }}>
-            <h4 style={{ margin: "0 0 10px 0" }}>Your Group Members:</h4>
-            <ul style={{ margin: 0 }}>
+          <div className="info-message-box">
+            <h4>Your Group Members:</h4>
+            <ul>
               {groupMembers.map((member, idx) => (
                 <li key={idx}>
                   {member.name} {member.isLeader && "👑 (Leader)"}

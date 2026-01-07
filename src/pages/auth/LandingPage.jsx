@@ -1,5 +1,5 @@
 // src/pages/auth/LandingPage.jsx
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./LandingPage.css";
 import LoginModal from "./LoginModal";
 import MyLogo from "../../assets/icons/logo.png";
@@ -13,11 +13,17 @@ import {
   FaGraduationCap,
   FaFileAlt,
   FaAward,
-  FaClock
+  FaClock,
+  FaMoon,
+  FaSun
 } from "react-icons/fa";
 
 const LandingPage = ({ setUser }) => {
   const [showLoginModal, setShowLoginModal] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    const saved = localStorage.getItem('theme');
+    return saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches);
+  });
 
   const handleNavClick = (e, targetId) => {
     e.preventDefault();
@@ -32,6 +38,17 @@ const LandingPage = ({ setUser }) => {
       });
     }
   };
+
+  const toggleTheme = () => {
+    const newTheme = !isDarkMode;
+    setIsDarkMode(newTheme);
+    localStorage.setItem('theme', newTheme ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', newTheme ? 'dark' : 'light');
+  };
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', isDarkMode ? 'dark' : 'light');
+  }, [isDarkMode]);
 
   const features = [
     {
@@ -88,6 +105,13 @@ const LandingPage = ({ setUser }) => {
             <a href="#features" className="nav-link" onClick={(e) => handleNavClick(e, 'features')}>Features</a>
             <a href="#benefits" className="nav-link" onClick={(e) => handleNavClick(e, 'benefits')}>Benefits</a>
             <a href="#about" className="nav-link" onClick={(e) => handleNavClick(e, 'about')}>About</a>
+            <button 
+              className="theme-toggle-btn"
+              onClick={toggleTheme}
+              aria-label="Toggle theme"
+            >
+              {isDarkMode ? <FaSun /> : <FaMoon />}
+            </button>
             <button 
               className="nav-login-btn"
               onClick={() => setShowLoginModal(true)}

@@ -49,14 +49,8 @@ const Submissions = () => {
   };
 
   const canSubmit = (deadlineDate) => {
-    if (!deadlineDate) return false;
-    const now = new Date();
-    const deadline = new Date(deadlineDate);
-
-    if (deadline < now) return false; // deadline passed
-
-    const diffDays = Math.ceil((deadline - now) / (1000 * 60 * 60 * 24));
-    return diffDays <= 6; // allow only if <= 6 days left
+   
+    return true;
   };
 
   const handleFileChange = (docId, file) => {

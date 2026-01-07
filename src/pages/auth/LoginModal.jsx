@@ -14,6 +14,12 @@ const LoginModal = ({ setUser, onClose }) => {
 
   const [errorMessage, setErrorMessage] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [humanVerification, setHumanVerification] = useState({
+    num1: Math.floor(Math.random() * 10) + 1,
+    num2: Math.floor(Math.random() * 10) + 1,
+    answer: "",
+    isVerified: false
+  });
 
   const navigate = useNavigate();
 
@@ -22,12 +28,27 @@ const LoginModal = ({ setUser, onClose }) => {
     setErrorMessage("");
   };
 
+  const handleVerificationChange = (e) => {
+    const answer = parseInt(e.target.value) || "";
+    const correctAnswer = humanVerification.num1 + humanVerification.num2;
+    setHumanVerification({
+      ...humanVerification,
+      answer: answer,
+      isVerified: answer === correctAnswer
+    });
+  };
+
   const validateEmail = (email) => /\S+@\S+\.\S+/.test(email);
   const validatePassword = (password) =>
     password.length > 7 && /[!@#$%^&*(),.?":{}|<>]/.test(password);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!humanVerification.isVerified) {
+      setErrorMessage("Please complete the human verification!");
+      return;
+    }
 
     if (!validateEmail(formData.email)) {
       setErrorMessage("Invalid email format!");
@@ -139,7 +160,30 @@ const LoginModal = ({ setUser, onClose }) => {
               <option value="Admin">Admin</option>
             </select>
           </div>
-          <button type="submit" className="login-modal-btn">
+          <div className="form-group">
+            <label>Human Verification</label>
+            <div className="human-verifier">
+              <span className="verification-question">
+                What is {humanVerification.num1} + {humanVerification.num2}?
+              </span>
+              <input
+                type="number"
+                className="input verification-input"
+                placeholder="Enter answer"
+                value={humanVerification.answer}
+                onChange={handleVerificationChange}
+                required
+              />
+              {humanVerification.isVerified && (
+                <span className="verification-check">✓ Verified</span>
+              )}
+            </div>
+          </div>
+          <button 
+            type="submit" 
+            className="login-modal-btn"
+            disabled={!humanVerification.isVerified}
+          >
             Sign In
           </button>
         </form>

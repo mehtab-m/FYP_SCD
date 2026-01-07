@@ -11,6 +11,7 @@
   background-image: var(--bg-mesh);
   position: relative;
   overflow-x: hidden;
+  transition: background var(--transition-base), background-image var(--transition-base);
 }
 
 /* Page Transition Animation */
